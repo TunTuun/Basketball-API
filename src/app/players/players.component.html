@@ -1,0 +1,12 @@
+<div class="card-grid">
+  <div class="card" *ngFor="let player of playersPerPage">
+    <p>{{player.name}}</p>
+    <img src="{{player.photo}}">
+  </div>
+</div>
+<mat-paginator [length]="players.length"
+              [pageSize]="pageSize"
+              [hidePageSize]="true"
+              (page)="pageEvent($event)">
+</mat-paginator>
+<p></p>

@@ -1,1 +1,16 @@
-<span>123</span>
+<nav class="navbar">
+  <h1 routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
+    <a routerLink="/">Basketball App</a>
+  </h1>
+  <ul>
+    <li routerLinkActive="active">
+      <a routerLink="/teams">Teams</a>
+    </li>
+    <li routerLinkActive="active"><a routerLink="/players">Players</a></li>
+    <li routerLinkActive="active"><a routerLink="/favorite">Favorite</a></li>
+  </ul>
+</nav>
+
+<div class="container">
+  <router-outlet></router-outlet>
+</div>
