@@ -11,22 +11,7 @@ export class PlayersService {
 
   constructor(private request: GetRequestService) { }
 
-  InitPlayers(): Array<IPlayer> {
-    let players: Array<IPlayer> = [];
-    this.request.getPlayers().subscribe((playerList: Array<IFullInfoPlayer>) => {
-      playerList.forEach(element => {
-        const fullname = element.name.split(' ');
-        const photoURL = this.request.getImage(fullname[1], fullname[0]);
-        players.push({
-          name: fullname[1],
-          surname: fullname[0],
-          photo: photoURL,
-          team: element.team_name,
-          gamesPlayed: element.games_played,
-          playerRating: element.player_efficiency_rating
-        });
-      });
-    });
-    return players;
+  InitPlayers(): Observable<IFullInfoPlayer[]> {
+    return this.request.getPlayers();
   }
 }
