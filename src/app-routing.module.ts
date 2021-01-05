@@ -1,9 +1,9 @@
 import { NgModule } from "@angular/core";
 import { RouterModule, Routes } from "@angular/router";
-import { ErrorComponent } from "./app/error/error.component";
-import { FavoriteComponent } from "./app/favorite/favorite.component";
-import { PlayersComponent } from "./app/players/players.component";
-import { TeamsComponent } from "./app/teams/teams.component";
+import { ErrorComponent } from "./app/Error/error.component";
+import { FavoriteComponent } from "./app/Components/favorite/favorite.component";
+import { PlayersComponent } from "./app/Components/players/players.component";
+import { TeamsComponent } from "./app/Components/teams/teams.component";
 
 const routes: Routes = [
   { path: 'teams', component: TeamsComponent },

@@ -1,10 +1,9 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { DEFAULT_HTTP_REQUEST } from '../constants/app.const';
-import { URLList } from '../enums/url-list.enum';
+import { DEFAULT_HTTP_REQUEST } from '../Constants/app.const';
+import { URLList } from '../Enums/url-list.enum';
 import { IFullInfoPlayer } from '../Models/fullInfoPlayer.interface';
-import { IPlayer } from '../Models/player.interface';
 
 @Injectable({
   providedIn: 'root'
