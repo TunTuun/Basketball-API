@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { DEFAULT_HTTP_REQUEST } from '../Constants/app.const';
 import { URLList } from '../Enums/url-list.enum';
-import { IFullInfoPlayer } from '../Models/fullInfoPlayer.interface';
+import { IFullInfoPlayer } from '../Models/full-info-player.interface';
 
 @Injectable({
   providedIn: 'root'

@@ -21,14 +21,13 @@ body {
 
 a {
   text-decoration: none;
+  &:focus {
+    outline: none;
+  }
 }
 
 h1 {
   font-weight: normal;
-}
-
-a:hover {
-  color: #666;
 }
 
 ul {

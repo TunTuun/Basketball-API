@@ -2,10 +2,12 @@ import { Component, OnInit } from '@angular/core';
 import { IPlayer } from '../../Models/player.interface';
 import { PlayersService } from '../../Services/players.service';
 import { PAGE_SIZE } from '../../Constants/app.const'
-import { IFullInfoPlayer } from '../../Models/fullInfoPlayer.interface';
+import { IFullInfoPlayer } from '../../Models/full-info-player.interface';
 import { GetRequestService } from '../../Services/get-request.service';
 import { HttpClient } from '@angular/common/http';
 import { DEFAULT_PLAYER_IMAGE } from '../../Constants/app.const';
+import { MatDialog } from '@angular/material/dialog';
+import { PlayerInfoComponent } from 'src/app/Shared/player-info/player-info.component';
 
 @Component({
   selector: 'app-players',
@@ -15,7 +17,7 @@ import { DEFAULT_PLAYER_IMAGE } from '../../Constants/app.const';
 
 export class PlayersComponent implements OnInit {
 
-  imageCountLoaded = null;
+  imageCountLoaded: number | null = null;
 
   isLoaded = false;
 
@@ -27,7 +29,12 @@ export class PlayersComponent implements OnInit {
   
   playersPerPage: Array<IPlayer> = [];
 
-  constructor(private playersService: PlayersService, private request: GetRequestService, private http: HttpClient) { }
+  constructor(
+    private playersService: PlayersService,
+    private request: GetRequestService,
+    private http: HttpClient,
+    public dialog: MatDialog
+    ) {}
 
   ngOnInit(): void {
     this.playersService.InitPlayers()
@@ -70,5 +77,9 @@ export class PlayersComponent implements OnInit {
     } else {
       this.imageCountLoaded++;
     }
+  }
+
+  openDialog(player) {
+    this.dialog.open(PlayerInfoComponent, {data: player});
   }
  }

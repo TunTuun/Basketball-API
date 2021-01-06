@@ -9,6 +9,7 @@ import { FavoriteComponent } from './Components/favorite/favorite.component';
 import { HttpClientModule } from '@angular/common/http';
 import { ErrorComponent } from './Error/error.component';
 import { PlayersModule } from './Components/players/players.module';
+import { MatDialogModule } from '@angular/material/dialog';
 
 @NgModule({
   declarations: [
@@ -23,6 +24,7 @@ import { PlayersModule } from './Components/players/players.module';
     AppRoutingModule,
     HttpClientModule,
     PlayersModule,
+    MatDialogModule
   ],
   providers: [],
   bootstrap: [AppComponent]
