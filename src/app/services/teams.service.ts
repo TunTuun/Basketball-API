@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { ITeam } from '../Models/team.interface';
+import { ITeam } from '../models/team.interface';
 import { GetRequestService } from './get-request.service';
 
 @Injectable({

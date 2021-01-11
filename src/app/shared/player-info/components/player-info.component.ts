@@ -1,6 +1,6 @@
 import { Component, Inject } from "@angular/core";
 import { MatDialogRef, MAT_DIALOG_DATA } from "@angular/material/dialog";
-import { IPlayer } from "src/app/Models/player.interface";
+import { IPlayer } from "../../../models/player.interface";
 
 @Component({
   selector: 'app-player-info',
