@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { MatDialog } from '@angular/material/dialog';
-
 import { IPlayer } from '../../models/player.interface';
 import { PAGE_SIZE } from '../../constants/app.const';
 import { GetRequestService } from '../../services/get-request.service';

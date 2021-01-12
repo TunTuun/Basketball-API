@@ -1,15 +1,19 @@
 import { NgModule } from "@angular/core";
 import { RouterModule, Routes } from "@angular/router";
-import { ErrorComponent } from "./app/shared/page-not-found/error.component";
-import { FavoriteComponent } from "./app/modules/favorite/favorite.component";
-import { PlayersComponent } from "./app/modules/players/players.component";
-import { TeamsComponent } from "./app/modules/teams/teams.component";
 
 const routes: Routes = [
-  { path: 'teams', component: TeamsComponent },
-  { path: 'players', component: PlayersComponent },
-  { path: 'favorite', component: FavoriteComponent },
-  { path: 'error', component: ErrorComponent },
+  { path: 'teams',
+  loadChildren: () => import('./app/modules/teams/teams.module').then(m => m.TeamsModule)
+  },
+  { path: 'players',
+    loadChildren: () => import('./app/modules/players/players.module').then(m => m.PlayersModule)
+  },
+  { path: 'favorite',
+    loadChildren: () => import('./app/modules/favorite/favorite.module').then(m => m.FavoriteModule)
+  },
+  { path: 'error',
+    loadChildren: () => import('./app/shared/page-not-found/error.module').then(m => m.ErrorModule)
+  },
   { path: '',  pathMatch: 'full', redirectTo: 'teams' },
   { path: '**', redirectTo: 'error' }
 ]
