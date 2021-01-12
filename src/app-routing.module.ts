@@ -1,9 +1,9 @@
 import { NgModule } from "@angular/core";
 import { RouterModule, Routes } from "@angular/router";
-import { ErrorComponent } from "./app/Error/error.component";
-import { FavoriteComponent } from "./app/Components/favorite/favorite.component";
-import { PlayersComponent } from "./app/Components/players/players.component";
-import { TeamsComponent } from "./app/Components/teams/teams.component";
+import { ErrorComponent } from "./app/shared/page-not-found/error.component";
+import { FavoriteComponent } from "./app/modules/favorite/favorite.component";
+import { PlayersComponent } from "./app/modules/players/players.component";
+import { TeamsComponent } from "./app/modules/teams/teams.component";
 
 const routes: Routes = [
   { path: 'teams', component: TeamsComponent },

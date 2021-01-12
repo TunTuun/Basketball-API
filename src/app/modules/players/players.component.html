@@ -1,10 +1,10 @@
 <app-spinner *ngIf="!isLoaded"></app-spinner>
 
 <div class="card-grid">
-  <div class="card" *ngFor="let player of playersPerPage">
+  <a class="card" *ngFor="let player of playersPerPage" mat-button (click)="openDialog(player)">
     <p>{{player.name}}</p>  
-    <img [src]="player.photo || defaultImage" (load)="imageLoaded()">
-  </div>
+    <img [src]="player.photo || defaultImage">
+  </a>
 </div>
 
 <mat-paginator [length]="players.length"
@@ -12,4 +12,3 @@
               [hidePageSize]="true"
               (page)="pageEvent($event)">
 </mat-paginator>
-<p></p>

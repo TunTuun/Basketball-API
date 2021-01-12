@@ -17,18 +17,18 @@ body {
 .container {
   margin: 0 auto;
   padding: 0;
+  position: relative;
 }
 
 a {
   text-decoration: none;
+  &:focus {
+    outline: none;
+  }
 }
 
 h1 {
   font-weight: normal;
-}
-
-a:hover {
-  color: #666;
 }
 
 ul {
@@ -104,14 +104,15 @@ hr {
 }
 
 .navbar {
+  width: 100%;
+  margin-bottom: 1rem;
+  position: relative;
   display: flex;
   justify-content: space-between;
   align-items: center;
   padding: 0.7rem 2rem;
   z-index: 1;
-  width: 100%;
   opacity: 0.9;
-  margin-bottom: 1rem;
   background: #dc3545;
   color: #fff;
 
