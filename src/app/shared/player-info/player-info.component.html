@@ -1,0 +1,8 @@
+<img mat-dialog-content src="{{playerData.photo}}">
+<h1 mat-dialog-title>{{playerData.name + ' ' + playerData.surname}}</h1>
+<div mat-dialog-content>{{'Team: ' + playerData.team}}</div>
+<div mat-dialog-content>{{'Games played: ' + playerData.gamesPlayed}}</div>
+<div mat-dialog-content>{{'Rating: ' + playerData.playerRating}}</div>
+<div mat-dialog-actions>
+  <button mat-button mat-dialog-close (click)="dialogClose()" class="btn">Назад</button>
+</div>

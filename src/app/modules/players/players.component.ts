@@ -6,7 +6,7 @@ import { IPlayer } from '../../models/player.interface';
 import { PAGE_SIZE } from '../../constants/app.const';
 import { GetRequestService } from '../../services/get-request.service';
 import { DEFAULT_PLAYER_IMAGE } from '../../constants/app.const';
-import { PlayerInfoComponent } from '../../shared/player-info/components/player-info.component';
+import { PlayerInfoComponent } from '../../shared/player-info/player-info.component';
 import { IFullInfoPlayer } from 'src/app/models/full-info-player.interface';
 
 @Component({
@@ -42,9 +42,9 @@ export class PlayersComponent implements OnInit {
           playerRating: element.player_efficiency_rating
         });
       });
+      this.playersPerPage = this.players.slice(0, 12);
+      this.imageExists();
     });
-    this.playersPerPage = this.players.slice(0, 12);
-    this.imageExists();
   }
 
   pageEvent(event) {

@@ -9,7 +9,7 @@ import { TeamsService } from '../../services/teams.service';
   styleUrls: ['./teams.component.scss']
 })
 export class TeamsComponent implements OnInit {
-  public isLoaded = false;
+  public isLoaded = true;
 
   constructor(
     private teamsService: TeamsService,
