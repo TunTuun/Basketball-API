@@ -1,9 +1,14 @@
 import { NgModule } from "@angular/core";
 import { RouterModule, Routes } from "@angular/router";
+import { TeamComponent } from "./app/modules/team/team.component";
 
 const routes: Routes = [
   { path: 'teams',
-  loadChildren: () => import('./app/modules/teams/teams.module').then(m => m.TeamsModule)
+    loadChildren: () => import('./app/modules/teams/teams.module').then(m => m.TeamsModule),
+  },
+  {
+    path: 'teams/:team',
+    component: TeamComponent
   },
   { path: 'players',
     loadChildren: () => import('./app/modules/players/players.module').then(m => m.PlayersModule)
