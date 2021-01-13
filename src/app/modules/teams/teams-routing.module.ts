@@ -6,11 +6,11 @@ import { TeamsComponent } from './teams.component';
 const routes: Routes = [
   {
     path: '',
-    component: TeamsComponent,
-    children: [{
-      path: ':team',
-      loadChildren: () => import('../team/team.module').then(m => m.TeamModule)
-    }]
+    component: TeamsComponent
+  },
+  {
+    path: ':team',
+    component: TeamComponent
   }
 ];
 

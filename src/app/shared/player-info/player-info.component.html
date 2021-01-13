@@ -1,4 +1,4 @@
-<img mat-dialog-content src="{{playerData.photo}}">
+<img mat-dialog-content src="{{playerData.photo}}" (error)="setPlayerDefaultImage($event)">
 <h1 mat-dialog-title>{{playerData.name + ' ' + playerData.surname}}</h1>
 <div mat-dialog-content>{{'Team: ' + playerData.team}}</div>
 <div mat-dialog-content>{{'Games played: ' + playerData.gamesPlayed}}</div>

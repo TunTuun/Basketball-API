@@ -1,7 +1,7 @@
 <app-spinner *ngIf="!isLoaded"></app-spinner>
 
 <div class="card-grid">
-  <a class="card" *ngFor="let team of teams">
+  <a class="card" *ngFor="let team of teams" [routerLink]="[team.name]">
     <img [src]="team.image" (error)="setDefaultImage($event)">
   </a>
 </div>
