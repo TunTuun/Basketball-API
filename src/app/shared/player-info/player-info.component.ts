@@ -1,5 +1,6 @@
 import { Component, Inject } from "@angular/core";
 import { MatDialogRef, MAT_DIALOG_DATA } from "@angular/material/dialog";
+import { DEFAULT_PLAYER_IMAGE } from "src/app/constants/app.const";
 import { IPlayer } from "src/app/Models/player.interface";
 
 @Component({
@@ -16,5 +17,9 @@ export class PlayerInfoComponent {
 
   dialogClose() {
     this.dialogRef.close();
+  }
+
+  setPlayerDefaultImage(event) {
+    event.target.src = DEFAULT_PLAYER_IMAGE;
   }
 }

@@ -1,21 +1,11 @@
 import { Injectable } from '@angular/core';
-import { ITeam } from '../models/team.interface';
-import { GetRequestService } from './get-request.service';
+import { TEAMS_IMAGE_URL } from '../constants/app.const'
 
 @Injectable({
   providedIn: 'root'
 })
 export class TeamsService {
-
-  constructor(private request: GetRequestService) { }
-
-  InitTeams() {
-    let teams: Array<ITeam>;
-    this.request.getTeams().subscribe((teamList: string[]) => {
-      teamList.forEach(element => {
-
-        // teams.push()
-      });
-    });
+  findTeamImage(teamName) {
+    return TEAMS_IMAGE_URL + teamName + '.png';
   }
 }

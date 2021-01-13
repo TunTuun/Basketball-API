@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { DEFAULT_HTTP_REQUEST } from '../constants/app.const';
+import { DEFAULT_HTTP_REQUEST, DEFAULT_TEAM_PLAYERS } from '../constants/app.const';
 import { URLList } from '../enums/url-list.enum';
 import { IFullInfoPlayer } from '../models/full-info-player.interface';
 
@@ -20,7 +20,11 @@ export class GetRequestService {
     return this.http.get<IFullInfoPlayer[]>(`${DEFAULT_HTTP_REQUEST}/${URLList.PLAYERS}`);
   }
 
-  getImage(name, surname) {
+  getImage(name, surname): string {
     return (`${DEFAULT_HTTP_REQUEST}/${URLList.PLAYER_IMAGE}/${name}/${surname}`);
+  }
+
+  getTeamPlayers(team): Observable<IFullInfoPlayer[]> {
+    return this.http.get<IFullInfoPlayer[]>(`${DEFAULT_HTTP_REQUEST}/${DEFAULT_TEAM_PLAYERS}/${team}`);
   }
 }

@@ -1,7 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
 import { MatDialog } from '@angular/material/dialog';
-
 import { IPlayer } from '../../models/player.interface';
 import { PAGE_SIZE } from '../../constants/app.const';
 import { GetRequestService } from '../../services/get-request.service';
@@ -17,14 +15,12 @@ import { IFullInfoPlayer } from 'src/app/models/full-info-player.interface';
 
 export class PlayersComponent implements OnInit {
   public isLoaded = false;
-  public defaultImage: string = DEFAULT_PLAYER_IMAGE;
   public pageSize: number = PAGE_SIZE;
   public players: Array<IPlayer> = [];
   public playersPerPage: Array<IPlayer> = [];
 
   constructor(
     private request: GetRequestService,
-    private http: HttpClient,
     public dialog: MatDialog
   ) { }
 
@@ -43,23 +39,16 @@ export class PlayersComponent implements OnInit {
         });
       });
       this.playersPerPage = this.players.slice(0, 12);
-      this.imageExists();
+      this.isLoaded = true;
     });
   }
 
   pageEvent(event) {
     this.playersPerPage = this.players.slice(event.pageIndex * event.pageSize, event.pageIndex * event.pageSize + event.pageSize);
-    this.imageExists();
   }
 
-  imageExists() {
-    this.playersPerPage.forEach(player => {
-      this.http.get(player.photo, { responseType: 'blob' })
-      .subscribe((image) => {
-          if (image.type === 'text/html') { player.photo = null }
-      });
-    });
-    this.isLoaded = true;
+  setDefaultImage(event) {
+    event.target.src = DEFAULT_PLAYER_IMAGE;
   }
 
   openDialog(player) {
