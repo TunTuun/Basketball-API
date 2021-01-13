@@ -12,7 +12,7 @@ const routes: Routes = [
     loadChildren: () => import('./app/modules/favorite/favorite.module').then(m => m.FavoriteModule)
   },
   { path: 'error',
-    loadChildren: () => import('./app/shared/page-not-found/error.module').then(m => m.ErrorModule)
+    loadChildren: () => import('./app/shared/error/error.module').then(m => m.ErrorModule)
   },
   { path: '',  pathMatch: 'full', redirectTo: 'teams' },
   { path: '**', redirectTo: 'error' }
