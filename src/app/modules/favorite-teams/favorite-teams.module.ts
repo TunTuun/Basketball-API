@@ -12,9 +12,6 @@ import { FavoriteTeamsRoutingModule } from './favorite-teams-routing.module';
     CommonModule,
     FavoriteTeamsRoutingModule,
     SpinnerModule
-  ],
-  providers: [
-    
   ]
 })
 

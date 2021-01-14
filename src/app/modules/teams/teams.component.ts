@@ -11,7 +11,6 @@ import { TeamsService } from '../../services/teams.service';
 })
 
 export class TeamsComponent implements OnInit {
-  
   public teams: ITeam[];
   public isLoaded: boolean;
 

@@ -26,7 +26,7 @@ export class PlayerService {
     let teamPlayers: IPlayer[] = [];
     teamPlayers = JSON.parse(this.cacheService.getCacheData('players'))
       .filter(player => player.teamAcronym === teamAcronym);
-    return teamPlayers
+    return teamPlayers;
   }
 
   getPlayerImageURL(name: string, surname: string): string {

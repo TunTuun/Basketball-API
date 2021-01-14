@@ -9,7 +9,7 @@ import { ITeam } from '../models/team.interface';
 export class CacheService {
 
   localDataExists(request: string): boolean {
-    return localStorage.getItem(request) ? true : false
+    return localStorage.getItem(request) ? true : false;
   }
 
   getCacheData(request: string): string {

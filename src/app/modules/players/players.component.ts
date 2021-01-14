@@ -17,7 +17,6 @@ import { CacheService } from 'src/app/services/cache.service';
 })
 
 export class PlayersComponent implements OnInit {
-  
   public pageSize: number = PAGE_SIZE;
   public playersPerPage: IPlayer[] = [];
   public isLoaded: boolean;

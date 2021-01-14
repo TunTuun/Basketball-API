@@ -17,7 +17,6 @@ import { PlayerInfoComponent } from 'src/app/shared/player-info/player-info.comp
 })
 
 export class TeamComponent implements OnInit {
-
   public team: ITeam = { name: null, image: null };
   public teamPlayers: IPlayer[] = [];
   public isLoaded: boolean;

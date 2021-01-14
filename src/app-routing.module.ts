@@ -1,5 +1,5 @@
-import { NgModule } from "@angular/core";
-import { RouterModule, Routes } from "@angular/router";
+import { NgModule } from '@angular/core';
+import { RouterModule, Routes } from '@angular/router';
 
 const routes: Routes = [
   { path: 'teams',
@@ -20,7 +20,7 @@ const routes: Routes = [
   },
   { path: '',  pathMatch: 'full', redirectTo: 'teams' },
   { path: '**', redirectTo: 'error' }
-]
+];
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],

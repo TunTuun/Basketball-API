@@ -6,4 +6,4 @@ export interface IPlayer {
   team: string;
   gamesPlayed: string;
   playerRating: string;
-};
+}

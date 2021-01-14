@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { DEFAULT_TEAM_IMAGE, TEAMS_IMAGE_URL } from '../constants/app.const'
+import { DEFAULT_TEAM_IMAGE, TEAMS_IMAGE_URL } from '../constants/app.const';
 import { ITeam } from '../models/team.interface';
 import { CacheService } from './cache.service';
 
@@ -9,7 +9,7 @@ import { CacheService } from './cache.service';
 export class TeamsService {
 
   constructor(private cacheService: CacheService) {}
-  
+
   findTeamImage(teamName: string): string {
     return TEAMS_IMAGE_URL + teamName + '.png';
   }
