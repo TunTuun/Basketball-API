@@ -1,10 +1,11 @@
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
-import { PlayersComponent } from './players.component';
+
+import { MatDialogModule } from '@angular/material/dialog';
 import { MatPaginatorModule } from '@angular/material/paginator';
+import { PlayersComponent } from './players.component';
 import { SpinnerModule } from '../../shared/spinner/spinner.module';
 import { PlayersRoutingModule } from './players-routing.module';
-import { MatDialogModule } from '@angular/material/dialog';
 
 @NgModule({
   declarations: [

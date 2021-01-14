@@ -4,6 +4,7 @@ import { ActivatedRoute, UrlSegment } from '@angular/router';
 import { IFullInfoPlayer } from 'src/app/models/full-info-player.interface';
 import { IPlayer } from 'src/app/models/player.interface';
 import { ITeam } from 'src/app/models/team.interface';
+import { CacheService } from 'src/app/services/cache.service';
 import { GetRequestService } from 'src/app/services/get-request.service';
 import { PlayerService } from 'src/app/services/player.service';
 import { TeamsService } from 'src/app/services/teams.service';
@@ -26,19 +27,41 @@ export class TeamComponent implements OnInit {
     public playerService: PlayerService,
     public dialog: MatDialog,
     private route: ActivatedRoute,
-    private request: GetRequestService
+    private request: GetRequestService,
+    private cacheService: CacheService
   ) { }
 
   ngOnInit(): void {
-    this.route.url.subscribe((params: UrlSegment[]) => this.team.name = params[0].path);
-    this.team.image = this.teamsService.findTeamImage(this.team.name);
-    this.request.getTeamPlayers(this.team.name).subscribe((playerList: IFullInfoPlayer[]) => {
-      this.teamPlayers = this.playerService.createPlayersFromAPI(playerList);
-      this.isLoaded = true;
-    });
+    this.getTeamName();
+    this.getTeamImage();
+    this.getPlayerData();
+    this.pageLoaded();
   }
 
   openDialog(player: IPlayer): void {
     this.dialog.open(PlayerInfoComponent, { data: player });
+  }
+
+  private getTeamName(): void {
+    this.route.url.subscribe((params: UrlSegment[]) => this.team.name = params[0].path);
+  }
+
+  private getTeamImage(): void {
+    this.team.image = this.teamsService.findTeamImage(this.team.name);
+  }
+
+  private getPlayerData(): void {
+    if (!this.cacheService.localDataExists('players')) {
+      this.request.getPlayers().subscribe((playerList: IFullInfoPlayer[]) => {
+        this.playerService.createPlayersFromAPI(playerList);
+        this.teamPlayers = this.playerService.getTeamPlayers(this.team.name);
+      });
+    } else {
+      this.teamPlayers = this.playerService.getTeamPlayers(this.team.name);
+    }
+  }
+
+  private pageLoaded(): void {
+    this.isLoaded = true;
   }
 }
