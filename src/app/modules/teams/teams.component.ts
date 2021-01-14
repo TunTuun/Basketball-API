@@ -14,7 +14,7 @@ export class TeamsComponent implements OnInit {
   public isLoaded: boolean;
 
   constructor(
-    private teamsService: TeamsService,
+    public teamsService: TeamsService,
     private request: GetRequestService
   ) { }
 

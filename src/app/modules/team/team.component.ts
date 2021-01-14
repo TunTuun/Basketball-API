@@ -33,7 +33,7 @@ export class TeamComponent implements OnInit {
     this.route.url.subscribe((params: UrlSegment[]) => this.team.name = params[0].path);
     this.team.image = this.teamsService.findTeamImage(this.team.name);
     this.request.getTeamPlayers(this.team.name).subscribe((playerList: IFullInfoPlayer[]) => {
-      this.teamPlayers = this.playerService.createPlayerFromAPI(playerList);
+      this.teamPlayers = this.playerService.createPlayersFromAPI(playerList);
       this.isLoaded = true;
     });
   }

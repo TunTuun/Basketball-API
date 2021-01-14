@@ -27,7 +27,7 @@ export class PlayersComponent implements OnInit {
 
   ngOnInit(): void {
     this.request.getPlayers().subscribe((playerList: IFullInfoPlayer[]) => {
-      this.players = this.playerService.createPlayerFromAPI(playerList);
+      this.players = this.playerService.createPlayersFromAPI(playerList);
       this.playersPerPage = this.players.slice(0, 12);
       this.isLoaded = true;
     });

@@ -22,10 +22,6 @@ export class GetRequestService {
     return this.http.get<IFullInfoPlayer[]>(`${DEFAULT_HTTP_REQUEST}/${URLList.PLAYERS}`);
   }
 
-  getImage(name: string, surname: string): string {
-    return (`${DEFAULT_HTTP_REQUEST}/${URLList.PLAYER_IMAGE}/${name}/${surname}`);
-  }
-
   getTeamPlayers(teamName: string): Observable<IFullInfoPlayer[]> {
     return this.http.get<IFullInfoPlayer[]>(`${DEFAULT_HTTP_REQUEST}/${DEFAULT_TEAM_PLAYERS}/${teamName}`);
   }
