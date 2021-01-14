@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { CommonModule } from "@angular/common";
+import { CommonModule } from '@angular/common';
 import { TeamsComponent } from './teams.component';
 import { SpinnerModule } from '../../shared/spinner/spinner.module';
 import { TeamsRoutingModule } from './teams-routing.module';

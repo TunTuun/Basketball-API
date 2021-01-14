@@ -1,12 +1,15 @@
 <app-spinner *ngIf="!isLoaded"></app-spinner>
 <div class="team-header">
-  <img class="team-icon" [src]="team.image" (error)="setTeamDefaultImage($event)">
+  <img class="team-icon" [src]="team.image" (error)="teamsService.setDefaultImage($event)">
   <h1>List of team players</h1>
-  <button class="btn team-header__return" routerLink="/teams">Return</button>
+  <div class="team-header__buttons">
+    <button class="btn">Add to Favorites</button>
+    <button class="btn" routerLink="/teams">Return</button>
+  </div>
 </div>
 <div class="card-grid">
   <a class="card" *ngFor="let player of teamPlayers" mat-button (click)="openDialog(player)">
     <p>{{player.name}}</p>
-    <img [src]="player.photo" (error)="setPlayerDefaultImage($event)">
+    <img [src]="player.photo" (error)="playerService.setDefaultImage($event)">
   </a>
 </div>

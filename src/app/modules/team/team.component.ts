@@ -1,11 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
-import { ActivatedRoute } from '@angular/router';
-import { DEFAULT_PLAYER_IMAGE, DEFAULT_TEAM_IMAGE } from 'src/app/constants/app.const';
+import { ActivatedRoute, UrlSegment } from '@angular/router';
 import { IFullInfoPlayer } from 'src/app/models/full-info-player.interface';
 import { IPlayer } from 'src/app/models/player.interface';
 import { ITeam } from 'src/app/models/team.interface';
+import { CacheService } from 'src/app/services/cache.service';
 import { GetRequestService } from 'src/app/services/get-request.service';
+import { PlayerService } from 'src/app/services/player.service';
 import { TeamsService } from 'src/app/services/teams.service';
 import { PlayerInfoComponent } from 'src/app/shared/player-info/player-info.component';
 
@@ -16,45 +17,50 @@ import { PlayerInfoComponent } from 'src/app/shared/player-info/player-info.comp
 })
 
 export class TeamComponent implements OnInit {
-  public team: ITeam = {name: null, image: null};
+  public team: ITeam = { name: null, image: null };
   public teamPlayers: IPlayer[] = [];
-  public isLoaded = false;
+  public isLoaded: boolean;
+
   constructor(
-    private route: ActivatedRoute,
-    private teamsService: TeamsService,
-    private request: GetRequestService,
+    public teamsService: TeamsService,
+    public playerService: PlayerService,
     public dialog: MatDialog,
+    private route: ActivatedRoute,
+    private request: GetRequestService,
+    private cacheService: CacheService
   ) { }
 
   ngOnInit(): void {
-    this.route.url.subscribe(params => this.team.name = params[0].path);
-    this.team.image = this.teamsService.findTeamImage(this.team.name);
-    this.request.getTeamPlayers(this.team.name).subscribe((playerList: IFullInfoPlayer[]) => {
-      playerList.forEach(element => {
-        const fullname = element.name.split(' ');
-        const photoURL = this.request.getImage(fullname[1], fullname[0]);
-        this.teamPlayers.push({
-          name: fullname[1],
-          surname: fullname[0],
-          photo: photoURL,
-          team: element.team_name,
-          gamesPlayed: element.games_played,
-          playerRating: element.player_efficiency_rating
-        });
-        this.isLoaded = true;
-      });
-    });
+    this.getTeamName();
+    this.getTeamImage();
+    this.getPlayerData();
+    this.pageLoaded();
   }
 
-  setTeamDefaultImage(event) {
-    event.target.src = DEFAULT_TEAM_IMAGE;
-  }
-
-  setPlayerDefaultImage(event) {
-    event.target.src = DEFAULT_PLAYER_IMAGE;
-  }
-
-  openDialog(player) {
+  openDialog(player: IPlayer): void {
     this.dialog.open(PlayerInfoComponent, { data: player });
+  }
+
+  private getTeamName(): void {
+    this.route.url.subscribe((params: UrlSegment[]) => this.team.name = params[0].path);
+  }
+
+  private getTeamImage(): void {
+    this.team.image = this.teamsService.findTeamImage(this.team.name);
+  }
+
+  private getPlayerData(): void {
+    if (!this.cacheService.localDataExists('players')) {
+      this.request.getPlayers().subscribe((playerList: IFullInfoPlayer[]) => {
+        this.playerService.createPlayersFromAPI(playerList);
+        this.teamPlayers = this.playerService.getTeamPlayers(this.team.name);
+      });
+    } else {
+      this.teamPlayers = this.playerService.getTeamPlayers(this.team.name);
+    }
+  }
+
+  private pageLoaded(): void {
+    this.isLoaded = true;
   }
 }

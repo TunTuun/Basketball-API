@@ -20,4 +20,4 @@ export interface IFullInfoPlayer {
   blocks_per_game: string;
   turnovers_per_game: string;
   player_efficiency_rating: string;
-};
+}

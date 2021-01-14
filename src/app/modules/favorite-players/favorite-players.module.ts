@@ -1,12 +1,12 @@
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
-import { FavoriteComponent } from './favorite.component';
+import { FavoritePlayersComponent } from './favorite-players.component';
 import { SpinnerModule } from '../../shared/spinner/spinner.module';
-import { FavoriteRoutingModule } from './favorite-routing.module';
+import { FavoriteRoutingModule } from './favorite-players-routing.module';
 
 @NgModule({
   declarations: [
-    FavoriteComponent
+    FavoritePlayersComponent
   ],
   imports: [
     CommonModule,
@@ -15,4 +15,4 @@ import { FavoriteRoutingModule } from './favorite-routing.module';
   ]
 })
 
-export class FavoriteModule {}
+export class FavoritePlayersModule {}

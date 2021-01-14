@@ -1,7 +1,8 @@
-import { Component, Inject } from "@angular/core";
-import { MatDialogRef, MAT_DIALOG_DATA } from "@angular/material/dialog";
-import { DEFAULT_PLAYER_IMAGE } from "src/app/constants/app.const";
-import { IPlayer } from "src/app/Models/player.interface";
+import { Component, Inject } from '@angular/core';
+import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { DEFAULT_PLAYER_IMAGE } from 'src/app/constants/app.const';
+import { IPlayer } from 'src/app/Models/player.interface';
+import { PlayerService } from 'src/app/services/player.service';
 
 @Component({
   selector: 'app-player-info',
@@ -13,13 +14,16 @@ export class PlayerInfoComponent {
 
   playerData: IPlayer = this.data;
 
-  constructor(public dialogRef: MatDialogRef<PlayerInfoComponent>, @Inject(MAT_DIALOG_DATA) public data: IPlayer) {}
+  constructor(
+    public playerService: PlayerService,
+    public dialogRef: MatDialogRef<PlayerInfoComponent>,
+    @Inject(MAT_DIALOG_DATA) public data: IPlayer) {}
 
-  dialogClose() {
+  dialogClose(): void {
     this.dialogRef.close();
   }
 
-  setPlayerDefaultImage(event) {
+  setPlayerDefaultImage(event): void {
     event.target.src = DEFAULT_PLAYER_IMAGE;
   }
 }
