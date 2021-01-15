@@ -69,7 +69,6 @@ export class TeamComponent implements OnInit {
     } else {
       this.isFavorite = false;
     }
-    console.log(this.isFavorite)
   }
 
   private pageLoaded(): void {

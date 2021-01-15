@@ -46,7 +46,7 @@ export class FavoriteTeamsComponent implements OnInit {
     }
   }
 
-  public removeFavoriteTeam(teamName) {
+  public removeFavoriteTeam(teamName: string): void {
     if (this.cacheService.removeFavoriteTeam(teamName)) {
       this.initFavoriteTeams();
     }

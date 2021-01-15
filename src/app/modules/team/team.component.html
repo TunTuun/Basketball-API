@@ -3,7 +3,6 @@
   <img class="team-icon" [src]="team.image" (error)="teamsService.setDefaultImage($event)">
   <h1>List of team players</h1>
   <div class="team-header__buttons">
-
     <button class="btn" (click)="cacheService.addFavoriteTeam(team.name); this.checkFavorite(team.name)"
     *ngIf="!this.isFavorite">
       Add to Favorites
