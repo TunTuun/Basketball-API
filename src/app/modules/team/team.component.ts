@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
-import { ActivatedRoute, UrlSegment } from '@angular/router';
+import { ActivatedRoute, Router, UrlSegment } from '@angular/router';
 import { IFullInfoPlayer } from 'src/app/models/full-info-player.interface';
 import { IPlayer } from 'src/app/models/player.interface';
 import { ITeam } from 'src/app/models/team.interface';
@@ -17,6 +17,8 @@ import { PlayerInfoComponent } from 'src/app/shared/player-info/player-info.comp
 })
 
 export class TeamComponent implements OnInit {
+  public teamExists: boolean;
+  public isFavorite: boolean;
   public team: ITeam = { name: null, image: null };
   public teamPlayers: IPlayer[] = [];
   public isLoaded: boolean;
@@ -24,16 +26,17 @@ export class TeamComponent implements OnInit {
   constructor(
     public teamsService: TeamsService,
     public playerService: PlayerService,
+    public cacheService: CacheService,
     public dialog: MatDialog,
     private route: ActivatedRoute,
-    private request: GetRequestService,
-    private cacheService: CacheService
+    private request: GetRequestService
   ) { }
 
   ngOnInit(): void {
     this.getTeamName();
     this.getTeamImage();
     this.getPlayerData();
+    this.checkFavorite();
     this.pageLoaded();
   }
 
@@ -50,13 +53,21 @@ export class TeamComponent implements OnInit {
   }
 
   private getPlayerData(): void {
-    if (!this.cacheService.localDataExists('players')) {
+    if (!this.cacheService.cacheDataExists('players')) {
       this.request.getPlayers().subscribe((playerList: IFullInfoPlayer[]) => {
         this.playerService.createPlayersFromAPI(playerList);
         this.teamPlayers = this.playerService.getTeamPlayers(this.team.name);
       });
     } else {
       this.teamPlayers = this.playerService.getTeamPlayers(this.team.name);
+    }
+  }
+
+  public checkFavorite(): void {
+    if (this.cacheService.isFavorite(this.team.name)) {
+      this.isFavorite = true;
+    } else {
+      this.isFavorite = false;
     }
   }
 

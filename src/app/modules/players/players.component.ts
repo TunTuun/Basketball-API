@@ -44,7 +44,7 @@ export class PlayersComponent implements OnInit {
   }
 
   private initPlayers(): void {
-    if (!this.cacheService.localDataExists('players')) {
+    if (!this.cacheService.cacheDataExists('players')) {
       this.request.getPlayers().subscribe((playerList: IFullInfoPlayer[]) => {
         this.players = this.playerService.createPlayersFromAPI(playerList);
         this.paginatorLength = this.players.length;

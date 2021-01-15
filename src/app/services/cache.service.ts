@@ -7,8 +7,7 @@ import { ITeam } from '../models/team.interface';
 })
 
 export class CacheService {
-
-  localDataExists(request: string): boolean {
+  cacheDataExists(request: string): boolean {
     return localStorage.getItem(request) ? true : false;
   }
 
@@ -22,5 +21,38 @@ export class CacheService {
 
   cachePlayers(players: IPlayer[]): void {
     localStorage.setItem('players', JSON.stringify(players));
+  }
+
+  initFavoriteTeams(): void {
+    localStorage.setItem('favoriteTeams', JSON.stringify({ favoriteTeams: [] }));
+  }
+
+  addFavoriteTeam(team: string): void {
+    if (!this.getCacheData('favoriteTeams')) {
+      localStorage.setItem('favoriteTeams', JSON.stringify({ favoriteTeams: [] }));
+    }
+    const favoriteTeamsList = JSON.parse(this.getCacheData('favoriteTeams')).favoriteTeams;
+    favoriteTeamsList.push(team);
+    localStorage.setItem('favoriteTeams', JSON.stringify({ 'favoriteTeams': favoriteTeamsList }));
+  }
+
+  removeFavoriteTeam(teamName: string): boolean {
+    localStorage.setItem('favoriteTeams',
+      JSON.stringify(
+        {
+          'favoriteTeams': (JSON.parse(localStorage.getItem('favoriteTeams')).favoriteTeams)
+            .filter((team: string) => team !== teamName)
+        }
+      )
+    );
+    return true;
+  }
+
+  isFavorite(teamName: string): boolean {
+    if (this.cacheDataExists('favoriteTeams')) {
+      return JSON.parse(this.getCacheData('favoriteTeams')).favoriteTeams.includes(teamName);
+    } else {
+      return false;
+    }
   }
 }

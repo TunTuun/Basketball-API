@@ -1,5 +1,7 @@
 import { NgModule } from '@angular/core';
-import { Routes, RouterModule } from '@angular/router';
+import { RouterModule, Routes } from '@angular/router';
+
+import { TeamGuard } from 'src/app/guards/team.guard';
 import { TeamComponent } from '../team/team.component';
 import { TeamsComponent } from './teams.component';
 
@@ -10,8 +12,9 @@ const routes: Routes = [
   },
   {
     path: ':team',
-    component: TeamComponent
-  }
+    component: TeamComponent,
+    canActivate: [TeamGuard]
+  },
 ];
 
 @NgModule({

@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { TeamGuard } from 'src/app/guards/team.guard';
 import { ITeam } from 'src/app/models/team.interface';
 import { CacheService } from 'src/app/services/cache.service';
 import { GetRequestService } from 'src/app/services/get-request.service';
@@ -26,7 +27,7 @@ export class TeamsComponent implements OnInit {
   }
 
   private initTeams(): void {
-    if (!this.cacheService.localDataExists('teams')) {
+    if (!this.cacheService.cacheDataExists('teams')) {
       this.request.getTeams().subscribe((teamList: string[]) => {
         this.teams = this.teamsService.createTeamsFromAPI(teamList);
       });

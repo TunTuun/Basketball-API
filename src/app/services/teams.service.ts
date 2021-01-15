@@ -10,17 +10,21 @@ export class TeamsService {
 
   constructor(private cacheService: CacheService) {}
 
-  findTeamImage(teamName: string): string {
+  public findTeamImage(teamName: string): string {
     return TEAMS_IMAGE_URL + teamName + '.png';
   }
 
-  setDefaultImage(event: Event): void {
+  public teamExists(teamName: string): boolean {
+    return Boolean(JSON.parse(this.cacheService.getCacheData('teams')).find((team: ITeam) => team.name === teamName));
+  }
+
+  public setDefaultImage(event: Event): void {
     (event.target as HTMLImageElement).src = DEFAULT_TEAM_IMAGE;
   }
 
-  createTeamsFromAPI(teamsAPIList: string[]): ITeam[] {
+  public createTeamsFromAPI(teamsAPIList: string[]): ITeam[] {
     let teams: ITeam[] = [];
-    if (!this.cacheService.localDataExists('teams')) {
+    if (!this.cacheService.cacheDataExists('teams')) {
       teamsAPIList.forEach((teamName: string) => {
         const imageURL = this.findTeamImage(teamName);
         teams.push({
