@@ -1,1 +1,16 @@
-<p>In development.</p>
+<app-spinner *ngIf="!isLoaded"></app-spinner>
+<div class="team-header">
+  <h1>Favorite Teams</h1>
+</div>
+<div class="card-grid" *ngIf="teamsExist; else noContent">
+  <a class="card card_favorite-card" *ngFor="let team of favoriteTeams">
+    <img class="team-icon" [src]="team.image" (error)="teamsService.setDefaultImage($event)">
+    <button class="btn card__remove-btn" (click)="removeFavoriteTeam(team.name)">X</button>
+  </a>
+</div>
+
+<ng-template #noContent>
+  <span class="wrapper">You don't have favorite teams.
+    <a routerLink="/teams">Want to add one?</a>
+  </span>
+</ng-template>

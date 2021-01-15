@@ -24,7 +24,7 @@ export class TeamsService {
 
   public createTeamsFromAPI(teamsAPIList: string[]): ITeam[] {
     let teams: ITeam[] = [];
-    if (!this.cacheService.localDataExists('teams')) {
+    if (!this.cacheService.cacheDataExists('teams')) {
       teamsAPIList.forEach((teamName: string) => {
         const imageURL = this.findTeamImage(teamName);
         teams.push({

@@ -39,7 +39,7 @@ export class PlayerService {
 
   createPlayersFromAPI(playersAPIList: IFullInfoPlayer[]): IPlayer[] {
     let players: IPlayer[] = [];
-    if (!this.cacheService.localDataExists('players')) {
+    if (!this.cacheService.cacheDataExists('players')) {
       playersAPIList.forEach(element => {
         const fullname = element.name.split(' ');
         const photoURL = this.getPlayerImageURL(fullname[1], fullname[0]);

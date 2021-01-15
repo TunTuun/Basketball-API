@@ -27,7 +27,7 @@ export class TeamsComponent implements OnInit {
   }
 
   private initTeams(): void {
-    if (!this.cacheService.localDataExists('teams')) {
+    if (!this.cacheService.cacheDataExists('teams')) {
       this.request.getTeams().subscribe((teamList: string[]) => {
         this.teams = this.teamsService.createTeamsFromAPI(teamList);
       });

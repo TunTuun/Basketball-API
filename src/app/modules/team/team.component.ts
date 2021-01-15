@@ -52,7 +52,7 @@ export class TeamComponent implements OnInit {
   }
 
   private getPlayerData(): void {
-    if (!this.cacheService.localDataExists('players')) {
+    if (!this.cacheService.cacheDataExists('players')) {
       this.request.getPlayers().subscribe((playerList: IFullInfoPlayer[]) => {
         this.playerService.createPlayersFromAPI(playerList);
         this.teamPlayers = this.playerService.getTeamPlayers(this.team.name);
