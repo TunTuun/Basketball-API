@@ -31,9 +31,9 @@ export class CacheService {
     if (!this.getCacheData('favoriteTeams')) {
       localStorage.setItem('favoriteTeams', JSON.stringify({favoriteTeams: []}))
     }
-    localStorage.setItem('favoriteTeams',
-    JSON.stringify(
-      JSON.parse(this.getCacheData('favoriteTeams')).favoriteTeams.push(team)));
+    let favoriteTeamsList = JSON.parse(this.getCacheData('favoriteTeams')).favoriteTeams;
+    favoriteTeamsList.push(team);
+    localStorage.setItem('favoriteTeams', JSON.stringify({"favoriteTeams" : favoriteTeamsList}));
   }
 
   removeFavoriteTeam(teamName: string): boolean {
@@ -44,5 +44,14 @@ export class CacheService {
       )
     );
       return true;
+  }
+
+  isFavorite(teamName: string): boolean {
+    if (this.cacheDataExists('favoriteTeams')) {
+      console.log(JSON.parse(this.getCacheData('favoriteTeams')).favoriteTeams.includes(teamName))
+      return JSON.parse(this.getCacheData('favoriteTeams')).favoriteTeams.includes(teamName);
+    } else {
+      return false;
+    }
   }
 }
