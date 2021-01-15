@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { TeamGuard } from 'src/app/guards/team.guard';
 import { ITeam } from 'src/app/models/team.interface';
 import { CacheService } from 'src/app/services/cache.service';
 import { GetRequestService } from 'src/app/services/get-request.service';

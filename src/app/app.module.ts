@@ -4,6 +4,7 @@ import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AppRoutingModule } from 'src/app-routing.module';
 import { HttpClientModule } from '@angular/common/http';
+import { TeamGuard } from './guards/team.guard';
 
 @NgModule({
   declarations: [
@@ -15,7 +16,7 @@ import { HttpClientModule } from '@angular/common/http';
     AppRoutingModule,
     HttpClientModule
   ],
-  providers: [],
+  providers: [TeamGuard],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

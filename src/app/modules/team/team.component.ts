@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
-import { ActivatedRoute, UrlSegment } from '@angular/router';
+import { ActivatedRoute, Router, UrlSegment } from '@angular/router';
 import { IFullInfoPlayer } from 'src/app/models/full-info-player.interface';
 import { IPlayer } from 'src/app/models/player.interface';
 import { ITeam } from 'src/app/models/team.interface';
@@ -17,6 +17,7 @@ import { PlayerInfoComponent } from 'src/app/shared/player-info/player-info.comp
 })
 
 export class TeamComponent implements OnInit {
+  public teamExists: boolean;
   public team: ITeam = { name: null, image: null };
   public teamPlayers: IPlayer[] = [];
   public isLoaded: boolean;
@@ -27,7 +28,8 @@ export class TeamComponent implements OnInit {
     public dialog: MatDialog,
     private route: ActivatedRoute,
     private request: GetRequestService,
-    private cacheService: CacheService
+    private cacheService: CacheService,
+    private router: Router
   ) { }
 
   ngOnInit(): void {
