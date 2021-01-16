@@ -16,8 +16,9 @@ export class PlayerService {
 
   getAllPlayers(): IPlayer[] {
     let allPlayers: IPlayer[];
-    this.request.getPlayers().subscribe((playerList: IFullInfoPlayer[]) => {
+    const playersRequest$ = this.request.getPlayers().subscribe((playerList: IFullInfoPlayer[]) => {
       allPlayers = this.createPlayersFromAPI(playerList);
+      playersRequest$.unsubscribe();
     });
     return allPlayers;
   }

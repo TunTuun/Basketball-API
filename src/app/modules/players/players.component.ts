@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 
 import { MatDialog } from '@angular/material/dialog';
 import { PageEvent } from '@angular/material/paginator';
@@ -9,6 +9,7 @@ import { PlayerService } from 'src/app/services/player.service';
 import { GetRequestService } from '../../services/get-request.service';
 import { PlayerInfoComponent } from '../../shared/player-info/player-info.component';
 import { CacheService } from 'src/app/services/cache.service';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-players',
@@ -16,11 +17,12 @@ import { CacheService } from 'src/app/services/cache.service';
   styleUrls: ['./players.component.scss']
 })
 
-export class PlayersComponent implements OnInit {
+export class PlayersComponent implements OnInit, OnDestroy {
   public pageSize: number = PAGE_SIZE;
   public playersPerPage: IPlayer[] = [];
   public isLoaded: boolean;
   public paginatorLength: number;
+  private subscription: Subscription;
   private players: IPlayer[] = [];
 
   constructor(
@@ -35,6 +37,12 @@ export class PlayersComponent implements OnInit {
     this.pageLoaded();
   }
 
+  ngOnDestroy(): void {
+    if (this.subscription) {
+      this.subscription.unsubscribe();
+    }
+  }
+
   pageEvent(event: PageEvent): void {
     this.playersPerPage = this.players.slice(event.pageIndex * event.pageSize, event.pageIndex * event.pageSize + event.pageSize);
   }
@@ -45,6 +53,7 @@ export class PlayersComponent implements OnInit {
 
   private initPlayers(): void {
     if (!this.cacheService.cacheDataExists('players')) {
+      this.subscription =
       this.request.getPlayers().subscribe((playerList: IFullInfoPlayer[]) => {
         this.players = this.playerService.createPlayersFromAPI(playerList);
         this.paginatorLength = this.players.length;

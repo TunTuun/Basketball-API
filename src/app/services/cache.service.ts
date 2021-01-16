@@ -29,14 +29,14 @@ export class CacheService {
 
   addFavoriteTeam(team: string): void {
     if (!this.getCacheData('favoriteTeams')) {
-      localStorage.setItem('favoriteTeams', JSON.stringify({ favoriteTeams: [] }));
+      this.initFavoriteTeams();
     }
     const favoriteTeamsList = JSON.parse(this.getCacheData('favoriteTeams')).favoriteTeams;
     favoriteTeamsList.push(team);
     localStorage.setItem('favoriteTeams', JSON.stringify({ 'favoriteTeams': favoriteTeamsList }));
   }
 
-  removeFavoriteTeam(teamName: string): boolean {
+  removeFavoriteTeam(teamName: string): void {
     localStorage.setItem('favoriteTeams',
       JSON.stringify(
         {
@@ -45,12 +45,45 @@ export class CacheService {
         }
       )
     );
-    return true;
   }
 
-  isFavorite(teamName: string): boolean {
+  isTeamFavorite(teamName: string): boolean {
     if (this.cacheDataExists('favoriteTeams')) {
       return JSON.parse(this.getCacheData('favoriteTeams')).favoriteTeams.includes(teamName);
+    } else {
+      return false;
+    }
+  }
+
+  //
+
+  initFavoritePlayers(): void {
+    localStorage.setItem('favoritePlayers', JSON.stringify({ favoritePlayers: [] }));
+  }
+
+  addFavoritePlayer(playerName: string, playerSurname: string): void {
+    if (!this.getCacheData('favoritePlayers')) {
+      this.initFavoritePlayers();
+    }
+    const favoritePlayersList = JSON.parse(this.getCacheData('favoritePlayers')).favoritePlayers;
+    favoritePlayersList.push({ name : playerName, surname : playerSurname });
+    localStorage.setItem('favoritePlayers', JSON.stringify({ 'favoritePlayers': favoritePlayersList }));
+  }
+
+  removeFavoritePlayer(playerName: string, playerSurname: string): void {
+    localStorage.setItem('favoritePlayers',
+    JSON.stringify({
+      'favoritePlayers': (JSON.parse(localStorage.getItem('favoritePlayers')).favoritePlayers)
+        .filter((player) => player.name !== playerName || player.surname !== playerSurname)
+    })
+    );
+  }
+
+  isPlayerFavorite(playerName: string, playerSurname: string): boolean {
+    if (this.cacheDataExists('favoritePlayers')) {
+      if (JSON.parse(this.getCacheData('favoritePlayers')).favoritePlayers.includes({name: playerName, surname: playerSurname})) {
+        return true;
+      }
     } else {
       return false;
     }

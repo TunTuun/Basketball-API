@@ -1,6 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute, Router, UrlSegment } from '@angular/router';
+import { Subscription } from 'rxjs';
 import { IFullInfoPlayer } from 'src/app/models/full-info-player.interface';
 import { IPlayer } from 'src/app/models/player.interface';
 import { ITeam } from 'src/app/models/team.interface';
@@ -16,12 +17,13 @@ import { PlayerInfoComponent } from 'src/app/shared/player-info/player-info.comp
   styleUrls: ['./team.component.scss']
 })
 
-export class TeamComponent implements OnInit {
+export class TeamComponent implements OnInit, OnDestroy {
   public teamExists: boolean;
   public isFavorite: boolean;
   public team: ITeam = { name: null, image: null };
   public teamPlayers: IPlayer[] = [];
   public isLoaded: boolean;
+  private subscription: Subscription[] = [];
 
   constructor(
     public teamsService: TeamsService,
@@ -40,12 +42,18 @@ export class TeamComponent implements OnInit {
     this.pageLoaded();
   }
 
+  ngOnDestroy() {
+    if (this.subscription.length) {
+      this.subscription.forEach(sub => sub.unsubscribe());
+    }
+  }
+
   openDialog(player: IPlayer): void {
     this.dialog.open(PlayerInfoComponent, { data: player });
   }
 
   private getTeamName(): void {
-    this.route.url.subscribe((params: UrlSegment[]) => this.team.name = params[0].path);
+    this.subscription.push(this.route.url.subscribe((params: UrlSegment[]) => this.team.name = params[0].path));
   }
 
   private getTeamImage(): void {
@@ -54,17 +62,18 @@ export class TeamComponent implements OnInit {
 
   private getPlayerData(): void {
     if (!this.cacheService.cacheDataExists('players')) {
+      this.subscription.push(
       this.request.getPlayers().subscribe((playerList: IFullInfoPlayer[]) => {
         this.playerService.createPlayersFromAPI(playerList);
         this.teamPlayers = this.playerService.getTeamPlayers(this.team.name);
-      });
+      }));
     } else {
       this.teamPlayers = this.playerService.getTeamPlayers(this.team.name);
     }
   }
 
   public checkFavorite(): void {
-    if (this.cacheService.isFavorite(this.team.name)) {
+    if (this.cacheService.isTeamFavorite(this.team.name)) {
       this.isFavorite = true;
     } else {
       this.isFavorite = false;
