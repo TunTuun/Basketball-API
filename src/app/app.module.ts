@@ -5,6 +5,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AppRoutingModule } from 'src/app-routing.module';
 import { HttpClientModule } from '@angular/common/http';
 import { TeamGuard } from './guards/team.guard';
+import { PlayerInfoModule } from './shared/player-info/player-info.module';
 
 @NgModule({
   declarations: [
@@ -14,7 +15,8 @@ import { TeamGuard } from './guards/team.guard';
     BrowserModule,
     BrowserAnimationsModule,
     AppRoutingModule,
-    HttpClientModule
+    HttpClientModule,
+    PlayerInfoModule
   ],
   providers: [TeamGuard],
   bootstrap: [AppComponent]

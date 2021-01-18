@@ -2,6 +2,7 @@
 <div class="team-header">
   <img class="team-icon" [src]="team.image" (error)="teamsService.setDefaultImage($event)">
   <h1>List of team players</h1>
+  <p *ngIf="this.error404">Sorry, API server with Teams is not responding right now.</p>
   <div class="team-header__buttons">
     <button class="btn" (click)="cacheService.addFavoriteTeam(team.name); this.checkFavorite(team.name)"
     *ngIf="!this.isFavorite">
