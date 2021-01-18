@@ -23,6 +23,7 @@ export class TeamComponent implements OnInit, OnDestroy {
   public team: ITeam = { name: null, image: null };
   public teamPlayers: IPlayer[] = [];
   public isLoaded: boolean;
+  public error404: boolean;
   private subscription: Subscription[] = [];
 
   constructor(
@@ -53,7 +54,10 @@ export class TeamComponent implements OnInit, OnDestroy {
   }
 
   private getTeamName(): void {
-    this.subscription.push(this.route.url.subscribe((params: UrlSegment[]) => this.team.name = params[0].path));
+    this.subscription.push(this.route.url.subscribe((params: UrlSegment[]) => this.team.name = params[0].path,
+    () => {
+      this.error404 = true;
+    }));
   }
 
   private getTeamImage(): void {

@@ -14,6 +14,7 @@ import { TeamsService } from '../../services/teams.service';
 export class TeamsComponent implements OnInit, OnDestroy {
   public teams: ITeam[];
   public isLoaded: boolean;
+  public error404: boolean;
   private subscription: Subscription;
 
   constructor(
@@ -37,6 +38,9 @@ export class TeamsComponent implements OnInit, OnDestroy {
     if (!this.cacheService.cacheDataExists('teams')) {
       this.subscription = this.request.getTeams().subscribe((teamList: string[]) => {
         this.teams = this.teamsService.createTeamsFromAPI(teamList);
+      },
+      () => {
+        this.error404 = true;
       });
     } else {
       this.teams = JSON.parse(this.cacheService.getCacheData('teams'));

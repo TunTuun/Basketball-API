@@ -21,6 +21,7 @@ export class PlayersComponent implements OnInit, OnDestroy {
   public pageSize: number = PAGE_SIZE;
   public playersPerPage: IPlayer[] = [];
   public isLoaded: boolean;
+  public error404: boolean;
   public paginatorLength: number;
   private subscription: Subscription;
   private players: IPlayer[] = [];
@@ -58,6 +59,9 @@ export class PlayersComponent implements OnInit, OnDestroy {
         this.players = this.playerService.createPlayersFromAPI(playerList);
         this.paginatorLength = this.players.length;
         this.playersPerPage = this.players.slice(0, 12);
+      },
+      () => {
+        this.error404 = true;
       });
     } else {
       this.players = JSON.parse(this.cacheService.getCacheData('players'));
