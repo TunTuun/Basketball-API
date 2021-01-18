@@ -29,10 +29,8 @@ export class FavoritePlayersComponent implements OnInit {
       if (favoritePlayers && favoritePlayers.length !== 0) {
         this.playersExist = true;
         this.favoritePlayers.length = 0;
-        console.log(favoritePlayers);
         favoritePlayers.forEach((playerID) => {
           const favoritePlayer = players.find(player => player.name === playerID.name && player.surname === playerID.surname);
-          console.log(favoritePlayer);
           if (favoritePlayer) {
             this.favoritePlayers.push(favoritePlayer);
           }

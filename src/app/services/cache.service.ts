@@ -74,15 +74,18 @@ export class CacheService {
     localStorage.setItem('favoritePlayers',
     JSON.stringify({
       'favoritePlayers': (JSON.parse(localStorage.getItem('favoritePlayers')).favoritePlayers)
-        .filter((player) => player.name !== playerName || player.surname !== playerSurname)
+        .filter((player: IPlayer) => player.name !== playerName || player.surname !== playerSurname)
     })
     );
   }
 
   isPlayerFavorite(playerName: string, playerSurname: string): boolean {
     if (this.cacheDataExists('favoritePlayers')) {
-      if (JSON.parse(this.getCacheData('favoritePlayers')).favoritePlayers.includes({name: playerName, surname: playerSurname})) {
-        return true;
+      if (JSON.parse(this.getCacheData('favoritePlayers')).favoritePlayers.filter(
+        (p: IPlayer) => p.name === playerName && p.surname === playerSurname).length > 0) {
+          return true;
+      } else {
+        return false;
       }
     } else {
       return false;

@@ -5,12 +5,18 @@
 <div mat-dialog-content>{{'Rating: ' + playerData.playerRating}}</div>
 <div mat-dialog-actions class="options">
   <button mat-button mat-dialog-close (click)="dialogClose()" class="btn">Return</button>
+
   <button class="btn" (click)="cacheService.addFavoritePlayer(playerData.name, playerData.surname);
-  this.checkFavorite(playerData.name, playerData.surname)" *ngIf="!this.isFavorite">
+  this.checkFavorite(playerData.name, playerData.surname)"
+  *ngIf="this.isFavorite; else removeFromFavorite">
     Add to Favorites
   </button>
-  <button class="btn" (click)="cacheService.removeFavoritePlayer(playerData.name, playerData.surname);
-    this.checkFavorite(playerData.name, playerData.surname)" *ngIf="this.isFavorite">
-    Remove from Favorites
-  </button>
+
+  <ng-template #removeFromFavorite>
+    <button class="btn" (click)="cacheService.removeFavoritePlayer(playerData.name, playerData.surname);
+      this.checkFavorite(playerData.name, playerData.surname)">
+      Remove from Favorites
+    </button>
+  </ng-template>
+
 </div>

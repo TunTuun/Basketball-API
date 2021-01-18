@@ -1,4 +1,4 @@
-import { Component, Inject } from '@angular/core';
+import { Component, Inject, OnInit } from '@angular/core';
 
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { DEFAULT_PLAYER_IMAGE } from 'src/app/constants/app.const';
@@ -12,16 +12,19 @@ import { PlayerService } from 'src/app/services/player.service';
   styleUrls: ['./player-info.component.scss']
 })
 
-export class PlayerInfoComponent {
-
+export class PlayerInfoComponent implements OnInit {
+  isFavorite: boolean;
   playerData: IPlayer = this.data;
-  isFavorite: Boolean;
 
   constructor(
     public playerService: PlayerService,
     public dialogRef: MatDialogRef<PlayerInfoComponent>,
     public cacheService: CacheService,
     @Inject(MAT_DIALOG_DATA) public data: IPlayer) {}
+
+  ngOnInit(): void {
+    this.checkFavorite(this.playerData.name, this.playerData.surname);
+  }
 
   dialogClose(): void {
     this.dialogRef.close();
@@ -33,9 +36,9 @@ export class PlayerInfoComponent {
 
   public checkFavorite(playerName: string, playerSurname: string): void {
     if (this.cacheService.isPlayerFavorite(playerName, playerSurname)) {
-      this.isFavorite = true;
-    } else {
       this.isFavorite = false;
+    } else {
+      this.isFavorite = true;
     }
   }
 }
