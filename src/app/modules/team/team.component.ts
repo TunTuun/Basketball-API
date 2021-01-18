@@ -50,7 +50,7 @@ export class TeamComponent implements OnInit, OnDestroy {
   }
 
   openDialog(player: IPlayer): void {
-    this.dialog.open(PlayerInfoComponent, { data: player });
+    this.dialog.open(PlayerInfoComponent, { data: player, autoFocus: false });
   }
 
   private getTeamName(): void {

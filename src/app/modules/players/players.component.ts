@@ -49,7 +49,7 @@ export class PlayersComponent implements OnInit, OnDestroy {
   }
 
   openDialog(player: IPlayer): void {
-    this.dialog.open(PlayerInfoComponent, { data: player });
+    this.dialog.open(PlayerInfoComponent, { data: player, autoFocus: false });
   }
 
   private initPlayers(): void {

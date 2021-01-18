@@ -1,5 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
+import { ReactiveFormsModule } from '@angular/forms';
 import { PlayerInfoComponent } from './player-info.component';
 
 @NgModule({
@@ -7,7 +8,8 @@ import { PlayerInfoComponent } from './player-info.component';
     PlayerInfoComponent
   ],
   imports: [
-    CommonModule
+    CommonModule,
+    ReactiveFormsModule
   ]
 })
 
