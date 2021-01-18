@@ -12,7 +12,7 @@ import { PlayerService } from 'src/app/services/player.service';
 export class FavoritePlayersComponent implements OnInit {
   public playersExist: boolean;
   public favoritePlayers: IPlayer[] = [];
-  public isLoaded: boolean = true;
+  public isLoaded: boolean;
 
   constructor(
     public playersService: PlayerService,

@@ -43,7 +43,7 @@ export class TeamComponent implements OnInit, OnDestroy {
     this.pageLoaded();
   }
 
-  ngOnDestroy() {
+  ngOnDestroy(): void {
     if (this.subscription.length) {
       this.subscription.forEach(sub => sub.unsubscribe());
     }

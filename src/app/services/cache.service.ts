@@ -33,14 +33,14 @@ export class CacheService {
     }
     const favoriteTeamsList = JSON.parse(this.getCacheData('favoriteTeams')).favoriteTeams;
     favoriteTeamsList.push(team);
-    localStorage.setItem('favoriteTeams', JSON.stringify({ 'favoriteTeams': favoriteTeamsList }));
+    localStorage.setItem('favoriteTeams', JSON.stringify({ favoriteTeams : favoriteTeamsList }));
   }
 
   removeFavoriteTeam(teamName: string): void {
     localStorage.setItem('favoriteTeams',
       JSON.stringify(
         {
-          'favoriteTeams': (JSON.parse(localStorage.getItem('favoriteTeams')).favoriteTeams)
+          favoriteTeams: (JSON.parse(localStorage.getItem('favoriteTeams')).favoriteTeams)
             .filter((team: string) => team !== teamName)
         }
       )
@@ -55,8 +55,6 @@ export class CacheService {
     }
   }
 
-  //
-
   initFavoritePlayers(): void {
     localStorage.setItem('favoritePlayers', JSON.stringify({ favoritePlayers: [] }));
   }
@@ -67,16 +65,15 @@ export class CacheService {
     }
     const favoritePlayersList = JSON.parse(this.getCacheData('favoritePlayers')).favoritePlayers;
     favoritePlayersList.push({ name : playerName, surname : playerSurname });
-    localStorage.setItem('favoritePlayers', JSON.stringify({ 'favoritePlayers': favoritePlayersList }));
+    localStorage.setItem('favoritePlayers', JSON.stringify({ favoritePlayers: favoritePlayersList }));
   }
 
   removeFavoritePlayer(playerName: string, playerSurname: string): void {
     localStorage.setItem('favoritePlayers',
     JSON.stringify({
-      'favoritePlayers': (JSON.parse(localStorage.getItem('favoritePlayers')).favoritePlayers)
+      favoritePlayers: (JSON.parse(localStorage.getItem('favoritePlayers')).favoritePlayers)
         .filter((player: IPlayer) => player.name !== playerName || player.surname !== playerSurname)
-    })
-    );
+    }));
   }
 
   isPlayerFavorite(playerName: string, playerSurname: string): boolean {
