@@ -10,6 +10,7 @@ import { GetRequestService } from '../../services/get-request.service';
 import { PlayerInfoComponent } from '../../shared/player-info/player-info.component';
 import { CacheService } from 'src/app/services/cache.service';
 import { Subscription } from 'rxjs';
+import { UpdatePlayersService } from 'src/app/services/update-players.service';
 
 @Component({
   selector: 'app-players',
@@ -28,6 +29,7 @@ export class PlayersComponent implements OnInit, OnDestroy {
 
   constructor(
     public playerService: PlayerService,
+    public updatePlayers: UpdatePlayersService,
     private dialog: MatDialog,
     private request: GetRequestService,
     private cacheService: CacheService
@@ -35,6 +37,7 @@ export class PlayersComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.initPlayers();
+    this.initListeners();
     this.pageLoaded();
   }
 
@@ -44,12 +47,18 @@ export class PlayersComponent implements OnInit, OnDestroy {
     }
   }
 
-  pageEvent(event: PageEvent): void {
+  public pageEvent(event: PageEvent): void {
     this.playersPerPage = this.players.slice(event.pageIndex * event.pageSize, event.pageIndex * event.pageSize + event.pageSize);
   }
 
-  openDialog(player: IPlayer): void {
+  public openDialog(player: IPlayer): void {
     this.dialog.open(PlayerInfoComponent, { data: player, autoFocus: false });
+  }
+
+  private initListeners() {
+    this.updatePlayers.submitted.subscribe(() => {
+      this.initPlayers();
+    });
   }
 
   private initPlayers(): void {

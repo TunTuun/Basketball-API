@@ -1,11 +1,13 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { Subject } from 'rxjs';
 
 import { DEFAULT_PLAYER_IMAGE } from 'src/app/constants/app.const';
 import { IPlayer } from 'src/app/Models/player.interface';
 import { CacheService } from 'src/app/services/cache.service';
 import { PlayerService } from 'src/app/services/player.service';
+import { UpdatePlayersService } from 'src/app/services/update-players.service';
 
 @Component({
   selector: 'app-player-info',
@@ -23,6 +25,7 @@ export class PlayerInfoComponent implements OnInit {
     public playerService: PlayerService,
     public dialogRef: MatDialogRef<PlayerInfoComponent>,
     public cacheService: CacheService,
+    public updatePlayer: UpdatePlayersService,
     @Inject(MAT_DIALOG_DATA) public data: IPlayer) {}
 
   ngOnInit(): void {
@@ -30,11 +33,11 @@ export class PlayerInfoComponent implements OnInit {
     this.initForm();
   }
 
-  dialogClose(): void {
+  public dialogClose(): void {
     this.dialogRef.close();
   }
 
-  setPlayerDefaultImage(event): void {
+  public setPlayerDefaultImage(event): void {
     event.target.src = DEFAULT_PLAYER_IMAGE;
   }
 
@@ -44,6 +47,7 @@ export class PlayerInfoComponent implements OnInit {
     } else {
       this.isFavorite = true;
     }
+    this.updatePlayer.isSubmitted();
   }
 
   public openForm(): void {
@@ -63,6 +67,8 @@ export class PlayerInfoComponent implements OnInit {
       this.form.value.playerRating = parseFloat(this.form.value.playerRating).toFixed(1);
       this.cacheService.editPlayerInfo(this.playerData.name, this.playerData.surname, this.form.value);
       this.closeForm();
+      this.playerData = this.cacheService.getPlayer(this.playerData.name, this.playerData.surname);
+      this.updatePlayer.isSubmitted();
     }
   }
 

@@ -41,12 +41,16 @@ input {
     border: 1px solid green;
   }
   &:disabled {
+    color: black;
     margin-left: unset;
     background-color: unset;
     border: unset;
   } 
   &::placeholder {
     color: black;
+  }
+  &:focus::-webkit-input-placeholder {
+    color: transparent;
   }
 }
 

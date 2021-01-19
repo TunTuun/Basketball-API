@@ -97,4 +97,10 @@ export class CacheService {
     changedPlayer.playerRating = changeValue.playerRating;
     this.cachePlayers(players);
   }
+
+  getPlayer(name: string, surname: string) {
+    if (this.cacheDataExists('players')) {
+      return JSON.parse(this.getCacheData('players')).find((p: IPlayer) => p.name === name && p.surname === surname);
+    }
+  }
 }

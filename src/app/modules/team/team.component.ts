@@ -9,6 +9,7 @@ import { CacheService } from 'src/app/services/cache.service';
 import { GetRequestService } from 'src/app/services/get-request.service';
 import { PlayerService } from 'src/app/services/player.service';
 import { TeamsService } from 'src/app/services/teams.service';
+import { UpdatePlayersService } from 'src/app/services/update-players.service';
 import { PlayerInfoComponent } from 'src/app/shared/player-info/player-info.component';
 
 @Component({
@@ -31,6 +32,7 @@ export class TeamComponent implements OnInit, OnDestroy {
     public playerService: PlayerService,
     public cacheService: CacheService,
     public dialog: MatDialog,
+    public updatePlayers: UpdatePlayersService,
     private route: ActivatedRoute,
     private request: GetRequestService
   ) { }
@@ -40,6 +42,7 @@ export class TeamComponent implements OnInit, OnDestroy {
     this.getTeamImage();
     this.getPlayerData();
     this.checkFavorite();
+    this.initListeners();
     this.pageLoaded();
   }
 
@@ -49,7 +52,7 @@ export class TeamComponent implements OnInit, OnDestroy {
     }
   }
 
-  openDialog(player: IPlayer): void {
+  public openDialog(player: IPlayer): void {
     this.dialog.open(PlayerInfoComponent, { data: player, autoFocus: false });
   }
 
@@ -86,5 +89,11 @@ export class TeamComponent implements OnInit, OnDestroy {
 
   private pageLoaded(): void {
     this.isLoaded = true;
+  }
+
+  private initListeners() {
+    this.subscription.push(this.updatePlayers.submitted.subscribe(() => {
+      this.getPlayerData();
+    })) 
   }
 }

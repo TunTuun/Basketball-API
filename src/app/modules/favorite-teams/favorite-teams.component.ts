@@ -45,7 +45,8 @@ export class FavoriteTeamsComponent implements OnInit {
     this.isLoaded = true;
   }
 
-  public removeFavoriteTeam(teamName: string): void {
+  public removeFavoriteTeam(event: Event, teamName: string): void {
+    event.preventDefault();
     this.cacheService.removeFavoriteTeam(teamName);
     this.initFavoriteTeams();
   }

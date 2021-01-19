@@ -1,8 +1,11 @@
 import { Component, OnInit } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
 
 import { IPlayer } from 'src/app/models/player.interface';
 import { CacheService } from 'src/app/services/cache.service';
 import { PlayerService } from 'src/app/services/player.service';
+import { UpdatePlayersService } from 'src/app/services/update-players.service';
+import { PlayerInfoComponent } from 'src/app/shared/player-info/player-info.component';
 
 @Component({
   selector: 'app-favorite',
@@ -16,10 +19,13 @@ export class FavoritePlayersComponent implements OnInit {
 
   constructor(
     public playersService: PlayerService,
-    public cacheService: CacheService) { }
+    public cacheService: CacheService,
+    public updatePlayers: UpdatePlayersService,
+    private dialog: MatDialog) { }
 
   ngOnInit(): void {
     this.initFavoritePlayers();
+    this.initListeners();
   }
 
   private initFavoritePlayers(): void {
@@ -45,8 +51,18 @@ export class FavoritePlayersComponent implements OnInit {
     this.isLoaded = true;
   }
 
+  private initListeners() {
+    this.updatePlayers.submitted.subscribe(() => {
+      this.initFavoritePlayers();
+    });
+  }
+
   public removeFavoritePlayer(playerName: string, playerSurname: string): void {
     this.cacheService.removeFavoritePlayer(playerName, playerSurname);
     this.initFavoritePlayers();
+  }
+
+  public openDialog(player: IPlayer): void {
+    this.dialog.open(PlayerInfoComponent, { data: player, autoFocus: false });
   }
 }

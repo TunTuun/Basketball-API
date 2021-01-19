@@ -5,9 +5,9 @@
 </div>
 
 <div class="card-grid" *ngIf="teamsExist; else noContent">
-  <a class="card card_favorite-card" *ngFor="let team of favoriteTeams">
+  <a class="card card_favorite-card" *ngFor="let team of favoriteTeams" [routerLink]="['/teams/', team.name]">
     <img class="team-icon" [src]="team.image" (error)="teamsService.setDefaultImage($event)">
-    <button class="btn card__remove-btn" (click)="removeFavoriteTeam(team.name)">X</button>
+    <button class="btn card__remove-btn" (click)="removeFavoriteTeam($event, team.name)">X</button>
   </a>
 </div>
 

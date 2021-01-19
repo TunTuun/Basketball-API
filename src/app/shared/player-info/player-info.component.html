@@ -2,7 +2,7 @@
   <img mat-dialog-content src="{{playerData.photo}}" (error)="playerService.setDefaultImage($event)">
   <h1 mat-dialog-title>{{playerData.name + ' ' + playerData.surname}}</h1>
   <div class="player-form__line">
-    <div class="player-form__title">{{'Team:' + playerData.team}}</div>
+    <div class="player-form__title">{{'Team: ' + playerData.team}}</div>
   </div>
   <div class="player-form__line">
     <div class="player-form__title">{{'Games played:'}}</div>
