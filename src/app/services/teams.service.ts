@@ -1,13 +1,13 @@
 import { Injectable } from '@angular/core';
-import { DEFAULT_TEAM_IMAGE, TEAMS_IMAGE_URL } from '../constants/app.const';
-import { ITeam } from '../models/team.interface';
+
 import { CacheService } from './cache.service';
+import { ITeam } from '../models/team.interface';
+import { DEFAULT_TEAM_IMAGE, TEAMS_IMAGE_URL } from '../constants/app.const';
 
 @Injectable({
   providedIn: 'root'
 })
 export class TeamsService {
-
   constructor(private cacheService: CacheService) {}
 
   public findTeamImage(teamName: string): string {

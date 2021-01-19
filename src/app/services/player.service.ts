@@ -1,20 +1,20 @@
 import { Injectable } from '@angular/core';
-import { DEFAULT_HTTP_REQUEST, DEFAULT_PLAYER_IMAGE } from '../constants/app.const';
-import { URLList } from '../enums/url-list.enum';
-import { IFullInfoPlayer } from '../models/full-info-player.interface';
-import { IPlayer } from '../models/player.interface';
+
 import { CacheService } from './cache.service';
 import { GetRequestService } from './get-request.service';
+import { IFullInfoPlayer } from '../models/full-info-player.interface';
+import { IPlayer } from '../models/player.interface';
+import { URLList } from '../enums/url-list.enum';
+import { DEFAULT_HTTP_REQUEST, DEFAULT_PLAYER_IMAGE } from '../constants/app.const';
 
 @Injectable({
   providedIn: 'root'
 })
 
 export class PlayerService {
-
   constructor(private request: GetRequestService, private cacheService: CacheService) { }
 
-  getAllPlayers(): IPlayer[] {
+  public getAllPlayers(): IPlayer[] {
     let allPlayers: IPlayer[];
     const playersRequest$ = this.request.getPlayers().subscribe((playerList: IFullInfoPlayer[]) => {
       allPlayers = this.createPlayersFromAPI(playerList);
@@ -23,22 +23,22 @@ export class PlayerService {
     return allPlayers;
   }
 
-  getTeamPlayers(teamAcronym: string): IPlayer[] {
+  public getTeamPlayers(teamAcronym: string): IPlayer[] {
     let teamPlayers: IPlayer[] = [];
     teamPlayers = JSON.parse(this.cacheService.getCacheData('players'))
       .filter(player => player.teamAcronym === teamAcronym);
     return teamPlayers;
   }
 
-  getPlayerImageURL(name: string, surname: string): string {
+  public getPlayerImageURL(name: string, surname: string): string {
     return (`${DEFAULT_HTTP_REQUEST}/${URLList.PLAYER_IMAGE}/${name}/${surname}`);
   }
 
-  setDefaultImage(event): void {
+  public setDefaultImage(event): void {
     event.target.src = DEFAULT_PLAYER_IMAGE;
   }
 
-  createPlayersFromAPI(playersAPIList: IFullInfoPlayer[]): IPlayer[] {
+  public createPlayersFromAPI(playersAPIList: IFullInfoPlayer[]): IPlayer[] {
     let players: IPlayer[] = [];
     if (!this.cacheService.cacheDataExists('players')) {
       playersAPIList.forEach(element => {

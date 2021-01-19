@@ -1,25 +1,26 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
-import { MatDialog } from '@angular/material/dialog';
-import { ActivatedRoute, Router, UrlSegment } from '@angular/router';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnDestroy, OnInit } from '@angular/core';
+import { ActivatedRoute, UrlSegment } from '@angular/router';
+
 import { Subscription } from 'rxjs';
-import { IFullInfoPlayer } from 'src/app/models/full-info-player.interface';
-import { IPlayer } from 'src/app/models/player.interface';
-import { ITeam } from 'src/app/models/team.interface';
+import { MatDialog } from '@angular/material/dialog';
+import { PlayerInfoComponent } from 'src/app/shared/player-info/player-info.component';
 import { CacheService } from 'src/app/services/cache.service';
 import { GetRequestService } from 'src/app/services/get-request.service';
 import { PlayerService } from 'src/app/services/player.service';
 import { TeamsService } from 'src/app/services/teams.service';
 import { UpdatePlayersService } from 'src/app/services/update-players.service';
-import { PlayerInfoComponent } from 'src/app/shared/player-info/player-info.component';
+import { IFullInfoPlayer } from 'src/app/models/full-info-player.interface';
+import { IPlayer } from 'src/app/models/player.interface';
+import { ITeam } from 'src/app/models/team.interface';
 
 @Component({
   selector: 'app-team',
   templateUrl: './team.component.html',
-  styleUrls: ['./team.component.scss']
+  styleUrls: ['./team.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 
 export class TeamComponent implements OnInit, OnDestroy {
-  public teamExists: boolean;
   public isFavorite: boolean;
   public team: ITeam = { name: null, image: null };
   public teamPlayers: IPlayer[] = [];
@@ -34,8 +35,8 @@ export class TeamComponent implements OnInit, OnDestroy {
     public dialog: MatDialog,
     public updatePlayers: UpdatePlayersService,
     private route: ActivatedRoute,
-    private request: GetRequestService
-  ) { }
+    private request: GetRequestService,
+    private ref: ChangeDetectorRef) { }
 
   ngOnInit(): void {
     this.getTeamName();
@@ -49,6 +50,7 @@ export class TeamComponent implements OnInit, OnDestroy {
   ngOnDestroy(): void {
     if (this.subscription.length) {
       this.subscription.forEach(sub => sub.unsubscribe());
+      this.ref.markForCheck();
     }
   }
 
@@ -91,9 +93,10 @@ export class TeamComponent implements OnInit, OnDestroy {
     this.isLoaded = true;
   }
 
-  private initListeners() {
+  private initListeners(): void {
     this.subscription.push(this.updatePlayers.submitted.subscribe(() => {
       this.getPlayerData();
-    })) 
+      this.ref.markForCheck();
+    }));
   }
 }

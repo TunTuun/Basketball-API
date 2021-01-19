@@ -1,18 +1,18 @@
-import { Component, Inject, OnInit } from '@angular/core';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { Subject } from 'rxjs';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, Inject, OnInit } from '@angular/core';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 
-import { DEFAULT_PLAYER_IMAGE } from 'src/app/constants/app.const';
-import { IPlayer } from 'src/app/Models/player.interface';
+import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { CacheService } from 'src/app/services/cache.service';
 import { PlayerService } from 'src/app/services/player.service';
 import { UpdatePlayersService } from 'src/app/services/update-players.service';
+import { IPlayer } from 'src/app/Models/player.interface';
+import { DEFAULT_PLAYER_IMAGE } from 'src/app/constants/app.const';
 
 @Component({
   selector: 'app-player-info',
   templateUrl: './player-info.component.html',
-  styleUrls: ['./player-info.component.scss']
+  styleUrls: ['./player-info.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 
 export class PlayerInfoComponent implements OnInit {
@@ -26,6 +26,7 @@ export class PlayerInfoComponent implements OnInit {
     public dialogRef: MatDialogRef<PlayerInfoComponent>,
     public cacheService: CacheService,
     public updatePlayer: UpdatePlayersService,
+    private fb: FormBuilder,
     @Inject(MAT_DIALOG_DATA) public data: IPlayer) {}
 
   ngOnInit(): void {
@@ -72,10 +73,14 @@ export class PlayerInfoComponent implements OnInit {
     }
   }
 
+  public getControlError(control: string, errorType: string): boolean {
+    return this.form.get(control).errors[errorType];
+  }
+
   private initForm(): void {
-    this.form = new FormGroup({
-      gamesPlayed: new FormControl(null, [Validators.maxLength(3), Validators.required, Validators.pattern('^[0-9]*$')]),
-      playerRating : new FormControl(null, [Validators.required, Validators.max(5), Validators.maxLength(3), Validators.pattern('^[0-9]*[.]?[0-9]+$')])
+    this.form = this.fb.group({
+      gamesPlayed: [null, [Validators.maxLength(3), Validators.required, Validators.pattern('^[0-9]*$')]],
+      playerRating: [null, [Validators.required, Validators.max(5), Validators.maxLength(3), Validators.pattern('^[0-9]*[.]?[0-9]+$')]]
     });
     this.form.get('gamesPlayed').disable();
     this.form.get('playerRating').disable();

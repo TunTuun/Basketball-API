@@ -1,13 +1,14 @@
-import { Component, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 
-import { ITeam } from 'src/app/models/team.interface';
 import { CacheService } from 'src/app/services/cache.service';
 import { TeamsService } from 'src/app/services/teams.service';
+import { ITeam } from 'src/app/models/team.interface';
 
 @Component({
   selector: 'app-favorite',
   templateUrl: './favorite-teams.component.html',
-  styleUrls: ['./favorite-teams.component.scss']
+  styleUrls: ['./favorite-teams.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class FavoriteTeamsComponent implements OnInit {
   public teamsExist: boolean;

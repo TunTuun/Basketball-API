@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnDestroy, OnInit } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { ITeam } from 'src/app/models/team.interface';
 import { CacheService } from 'src/app/services/cache.service';
@@ -8,7 +8,8 @@ import { TeamsService } from '../../services/teams.service';
 @Component({
   selector: 'app-teams',
   templateUrl: './teams.component.html',
-  styleUrls: ['./teams.component.scss']
+  styleUrls: ['./teams.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 
 export class TeamsComponent implements OnInit, OnDestroy {
@@ -20,7 +21,8 @@ export class TeamsComponent implements OnInit, OnDestroy {
   constructor(
     public teamsService: TeamsService,
     private request: GetRequestService,
-    private cacheService: CacheService
+    private cacheService: CacheService,
+    private ref: ChangeDetectorRef
   ) { }
 
   ngOnInit(): void {
@@ -31,6 +33,7 @@ export class TeamsComponent implements OnInit, OnDestroy {
   ngOnDestroy(): void {
     if (this.subscription) {
       this.subscription.unsubscribe();
+      this.ref.markForCheck();
     }
   }
 
@@ -38,6 +41,7 @@ export class TeamsComponent implements OnInit, OnDestroy {
     if (!this.cacheService.cacheDataExists('teams')) {
       this.subscription = this.request.getTeams().subscribe((teamList: string[]) => {
         this.teams = this.teamsService.createTeamsFromAPI(teamList);
+        this.ref.markForCheck();
       },
       () => {
         this.error404 = true;
