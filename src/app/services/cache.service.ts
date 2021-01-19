@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { IPlayerChangableValues } from '../models/player-changable-values.interface';
 import { IPlayer } from '../models/player.interface';
 import { ITeam } from '../models/team.interface';
 
@@ -33,7 +34,7 @@ export class CacheService {
     }
     const favoriteTeamsList = JSON.parse(this.getCacheData('favoriteTeams')).favoriteTeams;
     favoriteTeamsList.push(team);
-    localStorage.setItem('favoriteTeams', JSON.stringify({ favoriteTeams : favoriteTeamsList }));
+    localStorage.setItem('favoriteTeams', JSON.stringify({ favoriteTeams: favoriteTeamsList }));
   }
 
   removeFavoriteTeam(teamName: string): void {
@@ -64,28 +65,42 @@ export class CacheService {
       this.initFavoritePlayers();
     }
     const favoritePlayersList = JSON.parse(this.getCacheData('favoritePlayers')).favoritePlayers;
-    favoritePlayersList.push({ name : playerName, surname : playerSurname });
+    favoritePlayersList.push({ name: playerName, surname: playerSurname });
     localStorage.setItem('favoritePlayers', JSON.stringify({ favoritePlayers: favoritePlayersList }));
   }
 
   removeFavoritePlayer(playerName: string, playerSurname: string): void {
     localStorage.setItem('favoritePlayers',
-    JSON.stringify({
-      favoritePlayers: (JSON.parse(localStorage.getItem('favoritePlayers')).favoritePlayers)
-        .filter((player: IPlayer) => player.name !== playerName || player.surname !== playerSurname)
-    }));
+      JSON.stringify({
+        favoritePlayers: (JSON.parse(localStorage.getItem('favoritePlayers')).favoritePlayers)
+          .filter((player: IPlayer) => player.name !== playerName || player.surname !== playerSurname)
+      }));
   }
 
   isPlayerFavorite(playerName: string, playerSurname: string): boolean {
     if (this.cacheDataExists('favoritePlayers')) {
       if (JSON.parse(this.getCacheData('favoritePlayers')).favoritePlayers.filter(
         (p: IPlayer) => p.name === playerName && p.surname === playerSurname).length > 0) {
-          return true;
+        return true;
       } else {
         return false;
       }
     } else {
       return false;
+    }
+  }
+
+  editPlayerInfo(playerName: string, playerSurname: string, changeValue: IPlayerChangableValues): void {
+    const players: IPlayer[] = JSON.parse(this.getCacheData('players'));
+    const changedPlayer = players.find((p: IPlayer) => p.name === playerName && p.surname === playerSurname);
+    changedPlayer.gamesPlayed = changeValue.gamesPlayed;
+    changedPlayer.playerRating = changeValue.playerRating;
+    this.cachePlayers(players);
+  }
+
+  getPlayer(name: string, surname: string) {
+    if (this.cacheDataExists('players')) {
+      return JSON.parse(this.getCacheData('players')).find((p: IPlayer) => p.name === name && p.surname === surname);
     }
   }
 }

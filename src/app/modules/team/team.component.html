@@ -4,12 +4,12 @@
   <h1>List of team players</h1>
   <p *ngIf="this.error404">Sorry, API server with Teams is not responding right now.</p>
   <div class="team-header__buttons">
-    <button class="btn" (click)="cacheService.addFavoriteTeam(team.name); this.checkFavorite(team.name)"
-    *ngIf="!this.isFavorite">
+    <button class="btn" (click)="cacheService.addFavoriteTeam(team.name); checkFavorite(team.name)"
+    *ngIf="!isFavorite">
       Add to Favorites
     </button>
-    <button class="btn" (click)="cacheService.removeFavoriteTeam(team.name); this.checkFavorite(team.name)"
-    *ngIf="this.isFavorite">
+    <button class="btn" (click)="cacheService.removeFavoriteTeam(team.name); checkFavorite(team.name)"
+    *ngIf="isFavorite">
       Remove from Favorites
     </button>
     <button class="btn" routerLink="/teams">Return</button>

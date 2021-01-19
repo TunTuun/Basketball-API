@@ -5,7 +5,7 @@
 </div>
 
 <div class="card-grid" *ngIf="playersExist; else noContent">
-  <a class="card card_favorite-card" *ngFor="let player of favoritePlayers">
+  <a class="card card_favorite-card" *ngFor="let player of favoritePlayers" (click)="openDialog(player)">
     <p>{{player.name}}</p>
     <img class="team-icon" [src]="player.photo" (error)="playersService.setDefaultImage($event)">
     <button class="btn card__remove-btn" (click)="removeFavoritePlayer(player.name, player.surname)">X</button>

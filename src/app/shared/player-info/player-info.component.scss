@@ -7,3 +7,55 @@ img {
   display: flex;
   justify-content: space-between;
 }
+
+.player-form {
+  font-size: 18px;
+  position: relative;
+  &__return-button {
+    right: 0;
+    top: 0;
+    position: absolute;
+  }
+  &__line {
+    min-height: 30px;
+    margin: 10px 0;
+    display: flex;
+    align-items: center;
+    flex-wrap: nowrap;
+  }
+  &__title {
+    white-space: nowrap;
+  }
+}
+
+input {
+  padding: 5px;
+  font-size: 18px;
+  height: 30px;
+  margin-left: 15px;
+  width: 100%;
+  &.ng-invalid.ng-touched {
+    border: 1px solid darkred;
+  }
+  &.ng-valid.ng-touched {
+    border: 1px solid green;
+  }
+  &:disabled {
+    color: black;
+    margin-left: unset;
+    background-color: unset;
+    border: unset;
+  } 
+  &::placeholder {
+    color: black;
+  }
+  &:focus::-webkit-input-placeholder {
+    color: transparent;
+  }
+}
+
+.input-error {
+  &__message {
+    color: darkred;
+  }
+}

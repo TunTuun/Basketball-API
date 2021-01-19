@@ -5,6 +5,9 @@
   align-items: center;
   &__buttons {
     margin-left: auto;
+    & > button {
+      margin-left: 15px;
+    }
   }
   & > h1 {
     margin-left: 30px;

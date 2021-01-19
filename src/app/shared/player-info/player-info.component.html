@@ -1,22 +1,52 @@
-<img mat-dialog-content src="{{playerData.photo}}" (error)="playerService.setDefaultImage($event)">
-<h1 mat-dialog-title>{{playerData.name + ' ' + playerData.surname}}</h1>
-<div mat-dialog-content>{{'Team: ' + playerData.team}}</div>
-<div mat-dialog-content>{{'Games played: ' + playerData.gamesPlayed}}</div>
-<div mat-dialog-content>{{'Rating: ' + playerData.playerRating}}</div>
-<div mat-dialog-actions class="options">
-  <button mat-button mat-dialog-close (click)="dialogClose()" class="btn">Return</button>
+<form class="player-form form-control" [formGroup]="form" (ngSubmit)="submitPlayer()">
+  <img mat-dialog-content src="{{playerData.photo}}" (error)="playerService.setDefaultImage($event)">
+  <h1 mat-dialog-title>{{playerData.name + ' ' + playerData.surname}}</h1>
+  <div class="player-form__line">
+    <div class="player-form__title">{{'Team: ' + playerData.team}}</div>
+  </div>
+  <div class="player-form__line">
+    <div class="player-form__title">{{'Games played:'}}</div>
+    <input type="text" formControlName="gamesPlayed" placeholder="{{playerData.gamesPlayed}}">
+  </div>
 
-  <button class="btn" (click)="cacheService.addFavoritePlayer(playerData.name, playerData.surname);
-  this.checkFavorite(playerData.name, playerData.surname)"
-  *ngIf="this.isFavorite; else removeFromFavorite">
-    Add to Favorites
-  </button>
+  <div *ngIf="form.get('gamesPlayed').invalid && form.get('gamesPlayed').touched" class="input-error">
+    <small *ngIf="form.get('gamesPlayed').errors.required" class="input-error__message">Enter the ammount of played games.</small>
+    <small *ngIf="form.get('gamesPlayed').errors.pattern" class="input-error__message">Incorrect value.</small>
+    <small *ngIf="form.get('gamesPlayed').errors.maxlength && !form.get('gamesPlayed').errors.pattern"
+      class="input-error__message">Incorrect ammount.</small>
+  </div>
+  <div class="player-form__line">
+    <div class="player-form__title">{{'Rating:'}}</div>
+    <input type="text" formControlName="playerRating" placeholder="{{playerData.playerRating}}">
+  </div>
+  
+  <div *ngIf="form.get('playerRating').invalid && form.get('playerRating').touched" class="input-error">
+    <small *ngIf="form.get('playerRating').errors.required" class="input-error__message">Enter the rating.</small>
+    <small
+      *ngIf="form.get('playerRating').errors.pattern || form.get('playerRating').errors.max || form.get('playerRating').errors.maxlength"
+      class="input-error__message">Rating must be in range from 0.0 to 5.0</small>
+  </div>
 
-  <ng-template #removeFromFavorite>
-    <button class="btn" (click)="cacheService.removeFavoritePlayer(playerData.name, playerData.surname);
-      this.checkFavorite(playerData.name, playerData.surname)">
-      Remove from Favorites
+  <div mat-dialog-actions class="options">
+    <button mat-button mat-dialog-close (click)="dialogClose()" class="btn player-form__return-button"
+      type="button">X</button>
+    <button *ngIf="!this.formIsOpened; else formOpened" class="btn" type="button" (click)="openForm()">
+      Change info
     </button>
-  </ng-template>
-
-</div>
+    <ng-template #formOpened>
+      <button [disabled]="form.invalid" class="btn" type="submit">
+        Save info
+      </button>
+    </ng-template>
+    <button class="btn" type="button" (click)="cacheService.addFavoritePlayer(playerData.name, playerData.surname);
+    this.checkFavorite(playerData.name, playerData.surname)" *ngIf="this.isFavorite; else removeFromFavorite">
+      Add to Favorites
+    </button>
+    <ng-template #removeFromFavorite>
+      <button class="btn" type="button" (click)="cacheService.removeFavoritePlayer(playerData.name, playerData.surname);
+        this.checkFavorite(playerData.name, playerData.surname)">
+        Remove from Favorites
+      </button>
+    </ng-template>
+  </div>
+</form>
