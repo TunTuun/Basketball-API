@@ -75,6 +75,7 @@ export class TeamComponent implements OnInit, OnDestroy {
       this.request.getPlayers().subscribe((playerList: IFullInfoPlayer[]) => {
         this.playerService.createPlayersFromAPI(playerList);
         this.teamPlayers = this.playerService.getTeamPlayers(this.team.name);
+        this.ref.markForCheck();
       }));
     } else {
       this.teamPlayers = this.playerService.getTeamPlayers(this.team.name);

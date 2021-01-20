@@ -81,7 +81,6 @@ export class PlayersComponent implements OnInit, OnDestroy {
       this.paginatorLength = this.players.length;
       this.playersPerPage = this.players.slice(0, 12);
     }
-
   }
 
   private pageLoaded(): void {
