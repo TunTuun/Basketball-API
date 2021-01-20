@@ -1,4 +1,4 @@
 export interface IPlayerChangableValues {
-  gamesPlayed: string,
-  playerRating: string
+  gamesPlayed: string;
+  playerRating: string;
 }

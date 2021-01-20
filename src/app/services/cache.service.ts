@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+
 import { IPlayerChangableValues } from '../models/player-changable-values.interface';
 import { IPlayer } from '../models/player.interface';
 import { ITeam } from '../models/team.interface';
@@ -8,27 +9,27 @@ import { ITeam } from '../models/team.interface';
 })
 
 export class CacheService {
-  cacheDataExists(request: string): boolean {
+  public cacheDataExists(request: string): boolean {
     return localStorage.getItem(request) ? true : false;
   }
 
-  getCacheData(request: string): string {
+  public getCacheData(request: string): string {
     return localStorage.getItem(request);
   }
 
-  cacheTeams(teams: ITeam[]): void {
+  public cacheTeams(teams: ITeam[]): void {
     localStorage.setItem('teams', JSON.stringify(teams));
   }
 
-  cachePlayers(players: IPlayer[]): void {
+  public cachePlayers(players: IPlayer[]): void {
     localStorage.setItem('players', JSON.stringify(players));
   }
 
-  initFavoriteTeams(): void {
+  public initFavoriteTeams(): void {
     localStorage.setItem('favoriteTeams', JSON.stringify({ favoriteTeams: [] }));
   }
 
-  addFavoriteTeam(team: string): void {
+  public addFavoriteTeam(team: string): void {
     if (!this.getCacheData('favoriteTeams')) {
       this.initFavoriteTeams();
     }
@@ -37,7 +38,7 @@ export class CacheService {
     localStorage.setItem('favoriteTeams', JSON.stringify({ favoriteTeams: favoriteTeamsList }));
   }
 
-  removeFavoriteTeam(teamName: string): void {
+  public removeFavoriteTeam(teamName: string): void {
     localStorage.setItem('favoriteTeams',
       JSON.stringify(
         {
@@ -48,7 +49,7 @@ export class CacheService {
     );
   }
 
-  isTeamFavorite(teamName: string): boolean {
+  public isTeamFavorite(teamName: string): boolean {
     if (this.cacheDataExists('favoriteTeams')) {
       return JSON.parse(this.getCacheData('favoriteTeams')).favoriteTeams.includes(teamName);
     } else {
@@ -56,11 +57,11 @@ export class CacheService {
     }
   }
 
-  initFavoritePlayers(): void {
+  public initFavoritePlayers(): void {
     localStorage.setItem('favoritePlayers', JSON.stringify({ favoritePlayers: [] }));
   }
 
-  addFavoritePlayer(playerName: string, playerSurname: string): void {
+  public addFavoritePlayer(playerName: string, playerSurname: string): void {
     if (!this.getCacheData('favoritePlayers')) {
       this.initFavoritePlayers();
     }
@@ -69,7 +70,7 @@ export class CacheService {
     localStorage.setItem('favoritePlayers', JSON.stringify({ favoritePlayers: favoritePlayersList }));
   }
 
-  removeFavoritePlayer(playerName: string, playerSurname: string): void {
+  public removeFavoritePlayer(playerName: string, playerSurname: string): void {
     localStorage.setItem('favoritePlayers',
       JSON.stringify({
         favoritePlayers: (JSON.parse(localStorage.getItem('favoritePlayers')).favoritePlayers)
@@ -77,7 +78,7 @@ export class CacheService {
       }));
   }
 
-  isPlayerFavorite(playerName: string, playerSurname: string): boolean {
+  public isPlayerFavorite(playerName: string, playerSurname: string): boolean {
     if (this.cacheDataExists('favoritePlayers')) {
       if (JSON.parse(this.getCacheData('favoritePlayers')).favoritePlayers.filter(
         (p: IPlayer) => p.name === playerName && p.surname === playerSurname).length > 0) {
@@ -90,7 +91,7 @@ export class CacheService {
     }
   }
 
-  editPlayerInfo(playerName: string, playerSurname: string, changeValue: IPlayerChangableValues): void {
+  public editPlayerInfo(playerName: string, playerSurname: string, changeValue: IPlayerChangableValues): void {
     const players: IPlayer[] = JSON.parse(this.getCacheData('players'));
     const changedPlayer = players.find((p: IPlayer) => p.name === playerName && p.surname === playerSurname);
     changedPlayer.gamesPlayed = changeValue.gamesPlayed;
@@ -98,7 +99,7 @@ export class CacheService {
     this.cachePlayers(players);
   }
 
-  getPlayer(name: string, surname: string) {
+  public getPlayer(name: string, surname: string): IPlayer {
     if (this.cacheDataExists('players')) {
       return JSON.parse(this.getCacheData('players')).find((p: IPlayer) => p.name === name && p.surname === surname);
     }

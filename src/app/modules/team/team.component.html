@@ -1,4 +1,5 @@
 <app-spinner *ngIf="!isLoaded"></app-spinner>
+
 <div class="team-header">
   <img class="team-icon" [src]="team.image" (error)="teamsService.setDefaultImage($event)">
   <h1>List of team players</h1>

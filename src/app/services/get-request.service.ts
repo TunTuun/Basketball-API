@@ -1,10 +1,11 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable, of, throwError } from 'rxjs';
-import { DEFAULT_HTTP_REQUEST, DEFAULT_TEAM_PLAYERS } from '../constants/app.const';
-import { URLList } from '../enums/url-list.enum';
-import { IFullInfoPlayer } from '../models/full-info-player.interface';
+
+import { Observable, throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
+import { IFullInfoPlayer } from '../models/full-info-player.interface';
+import { URLList } from '../enums/url-list.enum';
+import { DEFAULT_HTTP_REQUEST, DEFAULT_TEAM_PLAYERS } from '../constants/app.const';
 
 @Injectable({
   providedIn: 'root'
@@ -14,7 +15,7 @@ export class GetRequestService {
 
   constructor(private http: HttpClient) {}
 
-  getTeams(): Observable<string[]> {
+  public getTeams(): Observable<string[]> {
     return this.http.get<string[]>(`${DEFAULT_HTTP_REQUEST}/${URLList.TEAMS}`)
     .pipe(
       catchError((err) => {
